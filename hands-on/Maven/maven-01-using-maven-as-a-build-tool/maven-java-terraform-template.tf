@@ -4,6 +4,7 @@
 
 provider "aws" {
   region = "us-east-1"
+  profile = "matt"
   //  access_key = ""
   //  secret_key = ""
   //  If you have entered your credentials in AWS CLI before, you do not need to use these arguments.
@@ -12,7 +13,7 @@ provider "aws" {
 resource "aws_instance" "maven-ec2" {
   ami             = "ami-0947d2ba12ee1ff75"
   instance_type   = "t2.micro"
-  key_name        = "northvirginia"
+  key_name        = "mattskey"
   //  Write your pem file name
   security_groups = ["maven-sec-grp"]
 
