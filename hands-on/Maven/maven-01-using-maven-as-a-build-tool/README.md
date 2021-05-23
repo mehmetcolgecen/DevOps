@@ -94,7 +94,7 @@ $ tree
 
 - Explain that the ```maven.compiler.source``` property specifies the version of source code accepted and the ```maven.compiler.target``` generates class files compatible with the specified version of JVM.
 
-- Explain that ```dependencyManagement``` section in the pom file describes common additional properties for other dependencies in the same document.
+- Explain that ```dependencyManagement``` section in the pom file will import multiple dependencies with compatible versions.  
 
 
 ## Part 3 - Run Maven Commands
