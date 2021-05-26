@@ -362,6 +362,8 @@ app.py
 | 1    | If there is no target directory. | The target directory is created and files inside volume are copied to this directory. |
 | 2    | If there is target directory, but it is empty. | The files in volume are copied to target directory.  |
 
+![situation 1 and 2](situation-1-and-2.png)
+
 - Run the `clarusway/hello-clarus` container with interactive shell open, name the container as `try1`, attach the volume `full-vol` to `/cw` mount point in the container, and show that `/cw` directory is created and files inside volume are copied to this directory.
 
 ```bash
@@ -381,6 +383,8 @@ full.txt
 |No| Situation   | Behaviour |
 | ---- | ----------- | ------------ |
 | 3    | If there is target directory and it is not empty, but volume is empty. | The files in the target directory are copied to volumes. |
+
+![situation 3](situation-3.png)
 
 - List all files/folders under the volume `empty-vol`, show that the folder `is empty.
 
@@ -414,6 +418,8 @@ app.py
 | ---- | ----------- | ------------ |
 | 4    | If the volume is not empty. | There will be just the files inside the volume regardless of the target directory is full or empty. |
 
+![situation 4](situation-4.png)
+
 - List all files/folders under the volume `full-vol`, show that the file `full.txt` is there.
 
 ```bash
@@ -433,7 +439,6 @@ full.txt
 ```
 
 - `exit` the container
-
 
 - Remove all volumes and containers and list them.
 
