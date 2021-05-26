@@ -398,10 +398,7 @@ app.py
 
 - List all files/folders under the `/hello-clarus`.
 
-```bash
-sudo ls /hello-clarus
-app.py
-```
+
 
 - `exit` the container
 
