@@ -202,7 +202,7 @@ docker ps -a
 sudo ls -al  /var/lib/docker/volumes/cw-vol/_data && sudo cat /var/lib/docker/volumes/cw-vol/_data/i-will-persist.txt
 ```
 
-## Part 4 - Using Same Volume with Different Containers
+## Part 4 - Using the Same Volume with Different Containers
 
 - Run a `alpine` container with interactive shell open, name the container as `clarus2nd`, attach the volume `cw-vol` to `/cw2nd` mount point in the container, and add command to run alpine shell.
 
@@ -299,6 +299,8 @@ docker rm clarus2nd clarus3rd clarus4th
 ```bash
 docker volume rm cw-vol
 ```
+
+![Same volume with different containers](same-vol-with-diff-con.png)
 
 ## Part 5 - docker volume behaviours
 
