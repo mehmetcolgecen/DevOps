@@ -304,12 +304,12 @@ docker volume rm cw-vol
 
 ## Part 5 - docker volume behaviours
 
-| Situation   | Behaviour |
-| ----------- | ----------- |
-| If there is no target directory. | The target directory is created and files inside volume are copied to this directory. |
-| If there is target directory, but it is empty. | The files in volume are copied to target directory.  |
-|If there is target directory and it is not empty, but volume is empty. | The files in the target directory are copied to volumes. |
-| If volume is not empty. | We just see the files inside volume regardless of  the target directory is full or empty. |
+|No | Situation   | Behaviour |
+| ---- | ----------- | ------------ |
+| 1    | If there is no target directory. | The target directory is created and files inside volume are copied to this directory. |
+| 2    | If there is target directory, but it is empty. | The files in volume are copied to target directory.  |
+| 3    | If there is target directory and it is not empty, but volume is empty. | The files in the target directory are copied to volumes. |
+| 4    | If volume is not empty. | We just see the files inside volume regardless of  the target directory is full or empty. |
 
 - Create `empty-vol` and `full-vol` volumes.
 
@@ -355,11 +355,12 @@ app.py
 
 - `exit` the container
 
-### Situation-1:
+### Situation-1 and 2:
 
-| Situation   | Behaviour |
-| ----------- | ----------- |
-If there is no target directory. | The target directory is created and files inside volume are copied to this directory. |
+|No | Situation   | Behaviour |
+| ---- | ----------- | ------------ |
+| 1    | If there is no target directory. | The target directory is created and files inside volume are copied to this directory. |
+| 2    | If there is target directory, but it is empty. | The files in volume are copied to target directory.  |
 
 - Run the `clarusway/hello-clarus` container with interactive shell open, name the container as `try1`, attach the volume `full-vol` to `/cw` mount point in the container, and show that `/cw` directory is created and files inside volume are copied to this directory.
 
@@ -375,11 +376,11 @@ full.txt
 - `exit` the container
 
 
-### Situation-2:
+### Situation-3:
 
-| Situation   | Behaviour |
-| ----------- | ----------- |
-|If there is target directory and it is not empty, but volume is empty. | The files in the target directory are copied to volumes. |
+|No| Situation   | Behaviour |
+| ---- | ----------- | ------------ |
+| 3    | If there is target directory and it is not empty, but volume is empty. | The files in the target directory are copied to volumes. |
 
 - List all files/folders under the volume `empty-vol`, show that the folder `is empty.
 
@@ -414,11 +415,11 @@ sudo ls /var/lib/docker/volumes/empty-vol/_data
 app.py
 ```
 
-### Situation-3:
+### Situation-4:
 
-| Situation   | Behaviour |
-| ----------- | ----------- |
-| If volume is not empty. | We just see the files inside volume regardless of  the target directory is full or empty. |
+|No| Situation   | Behaviour |
+| ---- | ----------- | ------------ |
+| 4    | If volume is not empty. | We just see the files inside volume regardless of  the target directory is full or empty. |
 
 - List all files/folders under the volume `full-vol`, show that the file `full.txt` is there.
 
