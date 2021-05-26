@@ -309,7 +309,7 @@ docker volume rm cw-vol
 | 1    | If there is no target directory. | The target directory is created and files inside volume are copied to this directory. |
 | 2    | If there is target directory, but it is empty. | The files in volume are copied to target directory.  |
 | 3    | If there is target directory and it is not empty, but volume is empty. | The files in the target directory are copied to volumes. |
-| 4    | If volume is not empty. | We just see the files inside volume regardless of  the target directory is full or empty. |
+| 4    | If the volume is not empty. | There will be just the files inside the volume regardless of the target directory is full or empty. |
 
 - Create `empty-vol` and `full-vol` volumes.
 
@@ -414,9 +414,9 @@ app.py
 
 ### Situation-4:
 
-|No| Situation   | Behaviour |
+|No    | Situation   | Behaviour |
 | ---- | ----------- | ------------ |
-| 4    | If volume is not empty. | We just see the files inside volume regardless of  the target directory is full or empty. |
+| 4    | If the volume is not empty. | There will be just the files inside the volume regardless of the target directory is full or empty. |
 
 - List all files/folders under the volume `full-vol`, show that the file `full.txt` is there.
 
