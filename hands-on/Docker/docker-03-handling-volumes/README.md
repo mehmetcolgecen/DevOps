@@ -399,11 +399,7 @@ dev           hello-clarus  lib           mnt           proc          run       
 app.py
 ```
 
-- List all files/folders under the `/hello-clarus`.
-
-
-
-- `exit` the container
+- `exit` the container.
 
 - List all files/folders under the volume `empty-vol`, show that the file `app.py` is there.
 
