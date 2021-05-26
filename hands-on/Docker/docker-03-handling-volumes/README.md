@@ -457,6 +457,12 @@ docker container ls
 docker run -d --name nginx-default -p 80:80  nginx
 ```
 
+- Add a security rule for protocol HTTP port 80 and show Nginx Web Server is running on Docker Machine.
+
+```text
+http://<public-ip>:80
+```
+
 - Attach the `nginx` container, show the index.html in the /usr/share/nginx/html directory.
 
 ```bash
@@ -469,7 +475,6 @@ root@4a1c7e5f394a:/usr/share/nginx/html# cat index.html
 
 - `exit` the container
 
-
 - Create a folder named  webpage, and an index.html file.
 
 ```bash
@@ -481,6 +486,12 @@ echo "<h1>Welcome to Clarusway</h1>" > index.html
 
 ```bash
 docker run -d --name nginx-new -p 8080:80 -v /home/ec2-user/webpage:/usr/share/nginx/html nginx
+```
+
+- Add a security rule for protocol HTTP port 8080 and show Nginx Web Server is running on Docker Machine.
+
+```text
+http://<public-ip>:8080
 ```
 
 - Attach the `nginx` container, show the index.html in the /usr/share/nginx/html directory.
