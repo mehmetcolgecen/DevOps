@@ -54,7 +54,7 @@ ssh -i .ssh/call-training.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazon
 systemctl status docker
 ```
 
-- Run an `alpine` container with interactive shell open, and add command to run alpine shell. Here, explain explain what the alpine container is and why it is so popular. (Small size, Secure, Simple, Fast boot)
+- Run a `alpine` container with interactive shell open, and add command to run alpine shell. Here, explain explain what the alpine container is and why it is so popular. (Small size, Secure, Simple, Fast boot)
 
 ```bash
 docker run -it alpine ash
@@ -202,7 +202,7 @@ docker ps -a
 sudo ls -al  /var/lib/docker/volumes/cw-vol/_data && sudo cat /var/lib/docker/volumes/cw-vol/_data/i-will-persist.txt
 ```
 
-## Part 4 - Using the Same Volume with Different Containers
+## Part 4 - Using Same Volume with Different Containers
 
 - Run a `alpine` container with interactive shell open, name the container as `clarus2nd`, attach the volume `cw-vol` to `/cw2nd` mount point in the container, and add command to run alpine shell.
 
@@ -300,8 +300,6 @@ docker rm clarus2nd clarus3rd clarus4th
 docker volume rm cw-vol
 ```
 
-![Same volume with different containers](same-vol-with-diff-con.png)
-
 ## Part 5 - docker volume behaviours
 
 |No | Situation   | Behaviour |
@@ -342,10 +340,10 @@ exit
 sudo ls /var/lib/docker/volumes/full-vol/_data
 ```
 
-- Run the `clarusway/hello-clarus` container with interactive shell open, name the container as `clarus`, and show the inside of `hello-clarus` directory.
+- Run the `clarusways/hello-clarus` container with interactive shell open, name the container as `clarus`, and show the inside of `hello-clarus` directory.
 
 ```bash
-docker run -it --name clarus clarusway/hello-clarus sh
+docker run -it --name clarus clarusways/hello-clarus sh
 / # ls
 bin           etc           home          media         opt           root          sbin          sys           usr
 dev           hello-clarus  lib           mnt           proc          run           srv           tmp           var
@@ -364,10 +362,10 @@ app.py
 
 ![situation 1 and 2](situation-1-and-2.png)
 
-- Run the `clarusway/hello-clarus` container with interactive shell open, name the container as `try1`, attach the volume `full-vol` to `/cw` mount point in the container, and show that `/cw` directory is created and files inside volume are copied to this directory.
+- Run the `clarusways/hello-clarus` container with interactive shell open, name the container as `try1`, attach the volume `full-vol` to `/cw` mount point in the container, and show that `/cw` directory is created and files inside volume are copied to this directory.
 
 ```bash
-docker run -it --name try1 -v full-vol:/cw clarusway/hello-clarus sh
+docker run -it --name try1 -v full-vol:/cw clarusways/hello-clarus sh
 / # ls
 bin           dev           hello-clarus  lib           mnt           proc          run           srv           tmp           var
 cw            etc           home          media         opt           root          sbin          sys           usr
@@ -392,10 +390,10 @@ full.txt
 sudo ls /var/lib/docker/volumes/empty-vol/_data
 ```
 
-- Run the `clarusway/hello-clarus` container with interactive shell open, name the container as `try2`, attach the volume `empty-vol` to `/hello-clarus` mount point in the container.
+- Run the `clarusways/hello-clarus` container with interactive shell open, name the container as `try2`, attach the volume `empty-vol` to `/hello-clarus` mount point in the container.
 
 ```bash
-docker run -it --name try2 -v empty-vol:/hello-clarus clarusway/hello-clarus sh
+docker run -it --name try2 -v empty-vol:/hello-clarus clarusways/hello-clarus sh
 / # ls
 bin           etc           home          media         opt           root          sbin          sys           usr
 dev           hello-clarus  lib           mnt           proc          run           srv           tmp           var
@@ -427,10 +425,10 @@ sudo ls /var/lib/docker/volumes/full-vol/_data
 full.txt
 ```
 
-- Run the `clarusway/hello-clarus` container with interactive shell open, name the container as `try3`, attach the volume `full-vol` to `/hello-clarus` mount point in the container, and show that we just see the files inside volume regardless of  the target directory is full or empty.
+- Run the `clarusways/hello-clarus` container with interactive shell open, name the container as `try3`, attach the volume `full-vol` to `/hello-clarus` mount point in the container, and show that we just see the files inside volume regardless of  the target directory is full or empty.
 
 ```bash
-docker run -it --name try3 -v full-vol:/hello-clarus clarusway/hello-clarus sh
+docker run -it --name try3 -v full-vol:/hello-clarus clarusways/hello-clarus sh
 / # ls
 bin           etc           home          media         opt           root          sbin          sys           usr
 dev           hello-clarus  lib           mnt           proc          run           srv           tmp           var
