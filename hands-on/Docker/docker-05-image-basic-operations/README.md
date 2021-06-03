@@ -218,6 +218,12 @@ docker stop welcome && docker rm welcome
 docker push clarusway/flask-app:2.0
 ```
 
+- We can also tag the same image with different tags.
+
+```bash
+docker image tag clarusway/flask-app:2.0 clarusway/flask-app:latest
+```
+
 - Delete image with `image id` locally.
 
 ```bash
