@@ -183,9 +183,9 @@ docker push clarusway/flask-app:1.0
   
 ```Dockerfile
 FROM python:alpine
+RUN pip install flask
 COPY . /app
 WORKDIR /app
-RUN pip install flask
 EXPOSE 80
 CMD python ./welcome.py
 ```
