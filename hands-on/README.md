@@ -28,7 +28,9 @@ List of hands-on trainings within DevOps as follows;
 
 # Jenkins
 
-- 
+- [Hands-on Jenkins-01 : Installing Jenkins on Amazon Linux 2 EC2 Instance](./Jenkins/jenkins-01-installing-jenkins/)
+
+- [Hands-on Jenkins-02 : Triggering Jenkins Jobs](./Jenkins/jenkins-02-triggers/)
 
 
 # Kubernetes
