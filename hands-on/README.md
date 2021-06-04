@@ -14,6 +14,10 @@ List of hands-on trainings within DevOps as follows;
 
 - [Hands-on Docker-05 : Docker Image Basic Operations](./Docker/docker-05-image-basic-operations/)
 
+- [Hands-on Docker-06 : Docker-06-compose-operations](./Docker/Docker-06-compose-operations/)
+
+- [Hands-on Docker-07 : Dockerize-to-do-app-on-python-flask](./Docker/dockerize-to-do-app-on-python-flask/)
+
 # Docker Swarm
 
 - 
