@@ -1,0 +1,2 @@
+apache sever 2 private ip is 172.31.26.227 
+apache sever 1 private ip is 172.31.25.224 
