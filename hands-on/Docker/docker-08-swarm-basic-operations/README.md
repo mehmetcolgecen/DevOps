@@ -183,7 +183,7 @@ docker service create \
 docker service ps viz
 ```
 
-- Start a `nginx service` with 5 replicas and show the replicas running on visualizer.
+- Start an `nginx service` with 5 replicas and show the replicas running on visualizer.
 
 ```bash
 docker service create --name webserver --replicas=5 -p 80:80 -d nginx
