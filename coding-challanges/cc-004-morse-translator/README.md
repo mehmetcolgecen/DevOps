@@ -1,4 +1,4 @@
-# Coding Challenge - 023: Morse Translator
+# Coding Challenge - 004: Morse Translator
 
 The purpose of this coding challenge is to write a program that translates the plain text to morse code.
 
