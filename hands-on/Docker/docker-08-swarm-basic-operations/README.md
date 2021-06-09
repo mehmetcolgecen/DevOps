@@ -282,11 +282,7 @@ docker swarm join --token SWMTKN-1-1nkizkzhhqk4i7blzwww3znwhd0lqfsu3nlh9gl1pe7mc
 
 ## Part 4 - Updating and Rolling Back in Docker Swarm
 
-<<<<<<< HEAD
-- Create a new service of `clarusways/container-info:1.0` with 10 replicas.
-=======
 - Create a new service of `clarusway/container-info:1.0` with 10 replicas.
->>>>>>> 44ee3b64fedd610cd34466e6088a658f3b04ea3b
 
 ```bash
 docker service create --name clarusweb -p 80:80 --replicas=10 clarusway/container-info:1.0
@@ -298,17 +294,10 @@ docker service create --name clarusweb -p 80:80 --replicas=10 clarusway/containe
 docker service update --help
 ```
 
-<<<<<<< HEAD
-- Update `clarusways/container-info:1.0` image with `clarusways/container-info:2.0` image and explain the changes.
-
-```bash
-docker service update --detach --update-delay 5s --update-parallelism 2 --image clarusways/container-info:2.0 clarusweb
-=======
 - Update `clarusway/container-info:1.0` image with `clarusway/container-info:2.0` image and explain the changes.
 
 ```bash
 docker service update --detach --update-delay 5s --update-parallelism 2 --image clarusway/container-info:2.0 clarusweb
->>>>>>> 44ee3b64fedd610cd34466e6088a658f3b04ea3b
 watch docker service ps clarusweb
  ```
 

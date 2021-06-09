@@ -122,7 +122,7 @@ docker network inspect clarus-net
 - Create a new service with 3 replicas.
 
 ```bash
-docker service create --name webserver --network clarus-net -p 80:80 -d --replicas=3 clarusways/container-info:1.0
+docker service create --name webserver --network clarus-net -p 80:80 -d --replicas=3 clarusway/container-info:1.0
 ```
 
 - List the tasks of `webserver` service, detect the nodes which is running the task and which is not.
@@ -288,7 +288,7 @@ services:
         networks:
             - clarusnet
     myapp:
-        image: clarusways/to-do-api:latest
+        image: clarusway/to-do-api:latest
         deploy:
             replicas: 5
         depends_on:
