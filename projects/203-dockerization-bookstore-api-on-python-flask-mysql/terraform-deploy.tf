@@ -13,7 +13,7 @@ provider "aws" {
 resource "aws_instance" "tf-docker-ec2" {
   ami             = "ami-09d95fab7fff3776c"
   instance_type   = "t2.micro"
-  key_name        = "northvirginia"
+  key_name        = "mehmet"
   //  Write your pem file name
   security_groups = ["docker-sec-gr-202"]
   tags = {
@@ -30,8 +30,8 @@ resource "aws_instance" "tf-docker-ec2" {
           -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
           mkdir -p /home/ec2-user/bookstore-api
-          TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/cw-workshop/dev/devops/projects/202-dockerization-bookstore-api-on-python-flask-mysql/"
+          TOKEN="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"
+          FOLDER="https://$TOKEN@raw.githubusercontent.com/mehmetcolgecen/DevOps/main/projects/203-dockerization-bookstore-api-on-python-flask-mysql/"
           curl -s --create-dirs -o "/home/ec2-user/bookstore-api/app.py" -L "$FOLDER"bookstore-api.py
           curl -s --create-dirs -o "/home/ec2-user/bookstore-api/requirements.txt" -L "$FOLDER"requirements.txt
           curl -s --create-dirs -o "/home/ec2-user/bookstore-api/Dockerfile" -L "$FOLDER"Dockerfile
