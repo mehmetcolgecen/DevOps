@@ -1,0 +1,5 @@
+# Docker Swarm Takeaways
+
+List of docker swarm takeaways as follows;
+
+- [Docker Swarm Takeaway-01 : Docker Swarm Introduction](./1.Docker_Swarm_Introduction-AWS&DEVOPS-7-21.pdf)
