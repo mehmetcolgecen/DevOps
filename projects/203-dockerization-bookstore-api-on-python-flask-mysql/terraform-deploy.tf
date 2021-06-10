@@ -37,8 +37,7 @@ resource "aws_instance" "tf-docker-ec2" {
           curl -s --create-dirs -o "/home/ec2-user/bookstore-api/Dockerfile" -L "$FOLDER"Dockerfile
           curl -s --create-dirs -o "/home/ec2-user/bookstore-api/docker-compose.yml" -L "$FOLDER"docker-compose.yml
           cd /home/ec2-user/bookstore-api
-          docker build -t callahanclarus/bookstore-api:latest .
-          docker-compose up -d
+          docker-compose up -d --build
           EOF
 }
 
