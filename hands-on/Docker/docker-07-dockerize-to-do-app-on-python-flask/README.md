@@ -250,7 +250,7 @@ CMD python ./to-do-api.py
 
 - Create a file called `docker-compose.yml` in your project folder with following setup.
 
-```text
+```yaml
 version: "3.7"
 
 services:
