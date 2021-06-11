@@ -36,10 +36,10 @@ Resources:
           Key: Name
           Value: !Sub instance of ${AWS::StackName}
       UserData:
-        Fn::Base64: !Sub |
+        Fn::Base64: |
           #! /bin/bash
-          sudo yum update -y
-          sudo yum install java-11-amazon-corretto -y
+          yum update -y
+          yum install java-11-amazon-corretto -y
           cd /home/ec2-user/
           wget https://ftp.itu.edu.tr/Mirror/Apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
           tar -zxvf $(ls | grep apache-maven-*-bin.tar.gz)
