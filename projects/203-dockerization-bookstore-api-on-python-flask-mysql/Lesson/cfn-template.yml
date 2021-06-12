@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  This Cloudformation Template creates a Docker machine on EC2 Instance and
+  deploys Bookstore Web API, Docker Machine will run on Amazon Linux 2
+  EC2 Instance with custom security group allowing HTTP (Port 80)
+  and SSH (Port 22) connections from anywhere.
+
+
+Parameters:
+  KeyPairName:
+    Description: Enter the name of your Key Pair for SSH connections.
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: Must one of the existing EC2 KeyPair
+
+
+Resources:
+  DockerMachineSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP and SSH for
+
+Outputs:
+  WebsiteURL:
+    Description: Bookstore Web API URL
+    Value: !Sub
