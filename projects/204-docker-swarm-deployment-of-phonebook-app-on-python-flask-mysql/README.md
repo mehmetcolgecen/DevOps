@@ -96,7 +96,7 @@ This project aims to deploy the Phonebook Application web application with Docke
 ## Project Skeleton
 
 ```text
-203-docker-swarm-deployment-of-phonebook-app-on-python-flask-mysql (folder)
+204-docker-swarm-deployment-of-phonebook-app-on-python-flask-mysql (folder)
 |
 |----readme.md            # Given to the students (Definition of the project)
 |----cfn-template.yml     # To be delivered by students (Cloudformation template)
