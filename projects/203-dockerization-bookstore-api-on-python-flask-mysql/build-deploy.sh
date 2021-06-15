@@ -8,14 +8,8 @@ curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compo
 -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 mkdir -p /home/ec2-user/bookstore-api
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 TOKEN="" #"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@"
 FOLDER="https://${TOKEN}raw.githubusercontent.com/mehmetcolgecen/DevOps/main/projects/203-dockerization-bookstore-api-on-python-flask-mysql/"
-=======
-TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/cw-workshop/dev/devops/projects/202-dockerization-bookstore-api-on-python-flask-mysql/"
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
 =======
