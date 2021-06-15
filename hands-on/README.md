@@ -18,9 +18,15 @@ List of hands-on trainings within DevOps as follows;
 
 - [Hands-on Docker-07 : Dockerize-to-do-app-on-python-flask](./Docker/dockerize-to-do-app-on-python-flask/)
 
+<<<<<<< HEAD
 # Docker Swarm
 
 - 
+=======
+- [Hands-on Docker-08 : Docker Swarm Basic Operations](./Docker/docker-08-swarm-basic-operations/)
+
+- [Hands-on Docker-09 : Docker Swarm Networking Operations](./Docker/docker-09-swarm-networking-managing-services-secrets-stacks/)
+>>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
 
 # Maven
 
