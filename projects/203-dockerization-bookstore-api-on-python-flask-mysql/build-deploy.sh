@@ -10,41 +10,10 @@ chmod +x /usr/local/bin/docker-compose
 mkdir -p /home/ec2-user/bookstore-api
 TOKEN="" #"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@"
 FOLDER="https://${TOKEN}raw.githubusercontent.com/mehmetcolgecen/DevOps/main/projects/203-dockerization-bookstore-api-on-python-flask-mysql/"
-FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/cw-workshop/dev/devops/projects/202-dockerization-bookstore-api-on-python-flask-mysql/"
->>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
-=======
-TOKEN="" #"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@"
-FOLDER="https://${TOKEN}raw.githubusercontent.com/mehmetcolgecen/DevOps/main/projects/203-dockerization-bookstore-api-on-python-flask-mysql/"
->>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
-=======
-TOKEN="" #"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@"
-FOLDER="https://${TOKEN}raw.githubusercontent.com/mehmetcolgecen/DevOps/main/projects/203-dockerization-bookstore-api-on-python-flask-mysql/"
->>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
-=======
-TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/cw-workshop/dev/devops/projects/202-dockerization-bookstore-api-on-python-flask-mysql/"
->>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 curl -s --create-dirs -o "/home/ec2-user/bookstore-api/app.py" -L "$FOLDER"bookstore-api.py
 curl -s --create-dirs -o "/home/ec2-user/bookstore-api/requirements.txt" -L "$FOLDER"requirements.txt
 curl -s --create-dirs -o "/home/ec2-user/bookstore-api/Dockerfile" -L "$FOLDER"Dockerfile
 curl -s --create-dirs -o "/home/ec2-user/bookstore-api/docker-compose.yml" -L "$FOLDER"docker-compose.yml
 cd /home/ec2-user/bookstore-api
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-docker-compose up -d --build
-=======
 docker build -t callahanclarus/bookstore-api:latest .
 docker-compose up -d
->>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
-=======
-docker-compose up -d --build
->>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
-=======
-docker-compose up -d --build
->>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
-=======
-docker build -t callahanclarus/bookstore-api:latest .
-docker-compose up -d
->>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d

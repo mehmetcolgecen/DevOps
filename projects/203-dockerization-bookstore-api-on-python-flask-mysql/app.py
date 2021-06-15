@@ -120,11 +120,8 @@ def remove_book(book):
     cursor.execute(query)
     row = cursor.fetchone()
     return True if row is None else False
-# Write a function named `home` which returns 'Welcome to the Mehmet's Bookstore API Service',
-# and assign to the static route of ('/')
-@app.route('/')
-def home():
-    return "Welcome to Mehmet's Bookstore API Service"
+
+
 # Write a function named `home` which returns 'Welcome to the Mehmet's Bookstore API Service',
 # and assign to the static route of ('/')
 @app.route('/')
