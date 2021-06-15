@@ -21,6 +21,7 @@ List of hands-on trainings within DevOps as follows;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Docker Swarm
 
 - 
@@ -39,6 +40,11 @@ List of hands-on trainings within DevOps as follows;
 
 - 
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+- [Hands-on Docker-08 : Docker Swarm Basic Operations](./Docker/docker-08-swarm-basic-operations/)
+
+- [Hands-on Docker-09 : Docker Swarm Networking Operations](./Docker/docker-09-swarm-networking-managing-services-secrets-stacks/)
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 
 # Maven
 

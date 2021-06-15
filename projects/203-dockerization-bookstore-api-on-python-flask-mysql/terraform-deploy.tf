@@ -16,6 +16,7 @@ resource "aws_instance" "tf-docker-ec2" {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   key_name        = "mehmet"
 =======
   key_name        = "northvirginia"
@@ -26,6 +27,9 @@ resource "aws_instance" "tf-docker-ec2" {
 =======
   key_name        = "mehmet"
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+  key_name        = "northvirginia"
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
   //  Write your pem file name
   security_groups = ["docker-sec-gr-202"]
   tags = {
@@ -34,8 +38,11 @@ resource "aws_instance" "tf-docker-ec2" {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   user_data = file("build-deploy.sh")
 =======
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
   user_data = <<-EOF
           #! /bin/bash
           yum update -y
@@ -57,6 +64,7 @@ resource "aws_instance" "tf-docker-ec2" {
           docker build -t callahanclarus/bookstore-api:latest .
           docker-compose up -d
           EOF
+<<<<<<< HEAD
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
 =======
   user_data = file("build-deploy.sh")
@@ -64,6 +72,8 @@ resource "aws_instance" "tf-docker-ec2" {
 =======
   user_data = file("build-deploy.sh")
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 }
 
 resource "aws_security_group" "tf-docker-sec-gr-202" {

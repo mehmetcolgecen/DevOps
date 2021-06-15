@@ -7,6 +7,7 @@ services:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
@@ -22,6 +23,8 @@ services:
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
             MYSQL_ROOT_PASSWORD: P123456p
             MYSQL_DATABASE: bookstore_db
             MYSQL_USER: clarusway
@@ -30,11 +33,14 @@ services:
             - clarusnet
     myapp:
         image: callahanclarus/bookstore-api:latest
+<<<<<<< HEAD
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
         restart: always
         depends_on:
             - database
@@ -45,6 +51,7 @@ services:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
@@ -54,6 +61,8 @@ services:
 =======
 
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 networks:
     clarusnet:
         driver: bridge

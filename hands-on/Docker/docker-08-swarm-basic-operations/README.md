@@ -187,6 +187,7 @@ docker service ps viz
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
@@ -204,6 +205,9 @@ docker service ps viz
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+- Start an `nginx service` with 5 replicas and show the replicas running on visualizer.
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 
 ```bash
 docker service create --name webserver --replicas=5 -p 80:80 -d nginx

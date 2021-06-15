@@ -3,7 +3,11 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
+<<<<<<< HEAD
       version = "3.38.0"
+=======
+      version = "3.37.0"
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
     }
   }
 }
@@ -53,9 +57,15 @@ resource "aws_security_group" "allow_ssh" {
 }
 
 resource "aws_instance" "tf-ec2" {
+<<<<<<< HEAD
   ami           = "ami-0d5eff06f840b45e9"
   instance_type = var.instance-type
   key_name = "mehmet"
+=======
+  ami           = "ami-0742b4e673072066f"
+  instance_type = var.instance-type
+  key_name = "mk"
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
   vpc_security_group_ids = [ aws_security_group.allow_ssh.id ]
   iam_instance_profile = "terraform"
       tags = {
@@ -94,7 +104,11 @@ resource "aws_instance" "tf-ec2" {
 # }
 
 provisioner "local-exec" {
+<<<<<<< HEAD
   command = "echo ${self.public_ip} >> C:/Users/USER/.ssh/config"
+=======
+  command = "echo ${self.public_ip} >> C:/Users/Aktif/.ssh/config"
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
   }
 }
 

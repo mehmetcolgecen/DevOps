@@ -253,6 +253,7 @@ CMD python ./to-do-api.py
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```text
 =======
 ```yaml
@@ -263,6 +264,9 @@ CMD python ./to-do-api.py
 =======
 ```text
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+```yaml
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 version: "3.7"
 
 services:

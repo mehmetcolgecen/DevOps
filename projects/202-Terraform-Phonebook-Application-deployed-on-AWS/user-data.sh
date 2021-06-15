@@ -7,6 +7,7 @@ yum install git -y
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 TOKEN="xxxxxxxxxxxxx"
 =======
 TOKEN="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"
@@ -17,5 +18,8 @@ TOKEN="xxxxxxxxxxxxx"
 =======
 TOKEN="xxxxxxxxxxxxx"
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+TOKEN="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"
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 cd /home/ec2-user && git clone https://$TOKEN@github.com/timothy-clark/phonebook.git
 python3 /home/ec2-user/phonebook/phonebook-app.py

@@ -13,6 +13,7 @@ List of docker takeaways as follows;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - [Docker Takeaway-05 : Docker Images](./5.Docker_Image-AW&DEVOPS-7-21.pdf)
 =======
 - [Docker Takeaway-05 : Docker Images](./5.Docker_Image-AW&DEVOPS-7-21.pdf)
@@ -25,3 +26,8 @@ List of docker takeaways as follows;
 =======
 - [Docker Takeaway-05 : Docker Images](./5.Docker_Image-AW&DEVOPS-7-21.pdf)
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+- [Docker Takeaway-05 : Docker Images](./5.Docker_Image-AW&DEVOPS-7-21.pdf)
+
+- [Docker Takeaway-06 : Docker Compose](./6.Docker_Compose-AWS&DEVOPS-7-21.pdf)
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d

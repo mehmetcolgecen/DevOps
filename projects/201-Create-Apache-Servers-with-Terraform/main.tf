@@ -3,10 +3,14 @@ terraform {
     aws = {
       source = "hashicorp/aws"
 <<<<<<< HEAD
+<<<<<<< HEAD
       version = "3.42.0"
 =======
       version = "3.38.0"
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+      version = "3.42.0"
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
     }
   }
 }
@@ -14,6 +18,9 @@ terraform {
 provider "aws" {
   region  = "us-east-1"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 #   profile = "cw-training"
 }
 
@@ -91,6 +98,7 @@ variable "mytags" {
 
 output "mypublicip" {
   value = aws_instance.apache-server[*].public_ip
+<<<<<<< HEAD
 =======
 }
 
@@ -155,4 +163,6 @@ output "myec2-public-ip" {
   value = aws_instance.tf-ec2.*.public_ip
 #  sensitive = true
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 }

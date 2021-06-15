@@ -39,6 +39,7 @@ Resources:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
@@ -50,15 +51,20 @@ Resources:
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
         Fn::Base64: !Sub |
           #! /bin/bash
           sudo yum update -y
           sudo yum install java-11-amazon-corretto -y
+<<<<<<< HEAD
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+>>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
           cd /home/ec2-user/
           wget https://ftp.itu.edu.tr/Mirror/Apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
           tar -zxvf $(ls | grep apache-maven-*-bin.tar.gz)
