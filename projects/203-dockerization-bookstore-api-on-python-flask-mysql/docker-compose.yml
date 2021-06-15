@@ -6,6 +6,9 @@ services:
         environment:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
             MYSQL_ROOT_PASSWORD: R1234r
@@ -16,6 +19,7 @@ services:
             - clarusnet
     myapp:
         build: .
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
             MYSQL_ROOT_PASSWORD: P123456p
@@ -29,6 +33,8 @@ services:
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
         restart: always
         depends_on:
             - database
@@ -38,9 +44,13 @@ services:
             - clarusnet
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5

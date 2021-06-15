@@ -15,10 +15,14 @@ resource "aws_instance" "tf-docker-ec2" {
   instance_type   = "t2.micro"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   key_name        = "mehmet"
 =======
   key_name        = "northvirginia"
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+  key_name        = "mehmet"
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
   key_name        = "mehmet"
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
@@ -27,6 +31,7 @@ resource "aws_instance" "tf-docker-ec2" {
   tags = {
     Name = "Bookstore-Web-Server"
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   user_data = file("build-deploy.sh")
@@ -53,6 +58,9 @@ resource "aws_instance" "tf-docker-ec2" {
           docker-compose up -d
           EOF
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+  user_data = file("build-deploy.sh")
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
   user_data = file("build-deploy.sh")
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5

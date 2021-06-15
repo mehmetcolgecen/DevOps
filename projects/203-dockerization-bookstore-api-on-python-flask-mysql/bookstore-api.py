@@ -124,6 +124,9 @@ def remove_book(book):
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 # Write a function named `home` which returns 'Welcome to the Mehmet's Bookstore API Service',
@@ -132,6 +135,7 @@ def remove_book(book):
 def home():
     return "Welcome to Mehmet's Bookstore API Service"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Write a function named `home` which returns 'Welcome to the Callahan's Bookstore API Service',
 # and assign to the static route of ('/')
@@ -139,6 +143,8 @@ def home():
 def home():
     return "Welcome to Callahan's Bookstore API Service"
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 =======
 >>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 
