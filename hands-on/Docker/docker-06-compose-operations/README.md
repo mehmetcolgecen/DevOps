@@ -40,10 +40,14 @@ ssh -i .ssh/call-training.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazon
 
 ```bash
 <<<<<<< HEAD
+<<<<<<< HEAD
 sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" \
 =======
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" \
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 -o /usr/local/bin/docker-compose
 ```
 

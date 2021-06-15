@@ -37,16 +37,22 @@ Resources:
           Value: !Sub instance of ${AWS::StackName}
       UserData:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
         Fn::Base64: |
           #! /bin/bash
           yum update -y
           yum install java-11-amazon-corretto -y
+<<<<<<< HEAD
 =======
         Fn::Base64: !Sub |
           #! /bin/bash
           sudo yum update -y
           sudo yum install java-11-amazon-corretto -y
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
           cd /home/ec2-user/
           wget https://ftp.itu.edu.tr/Mirror/Apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
           tar -zxvf $(ls | grep apache-maven-*-bin.tar.gz)

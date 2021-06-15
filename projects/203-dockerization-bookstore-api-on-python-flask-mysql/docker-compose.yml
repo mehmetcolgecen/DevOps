@@ -5,6 +5,9 @@ services:
         image: mysql:5.7
         environment:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
             MYSQL_ROOT_PASSWORD: R1234r
             MYSQL_DATABASE: bookstore_db
             MYSQL_USER: clarusway
@@ -13,6 +16,7 @@ services:
             - clarusnet
     myapp:
         build: .
+<<<<<<< HEAD
 =======
             MYSQL_ROOT_PASSWORD: P123456p
             MYSQL_DATABASE: bookstore_db
@@ -23,6 +27,8 @@ services:
     myapp:
         image: callahanclarus/bookstore-api:latest
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
         restart: always
         depends_on:
             - database
@@ -31,9 +37,13 @@ services:
         networks:
             - clarusnet
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 networks:
     clarusnet:
         driver: bridge

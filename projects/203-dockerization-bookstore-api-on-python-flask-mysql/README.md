@@ -7,10 +7,14 @@ Bookstore Web API Application aims to create a bookstore web service using Docke
 ## Problem Statement
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ![Project_202](202-bookstore-api.png) 
 =======
 ![Project_203](202-bookstore-api.png) 
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+![Project_202](202-bookstore-api.png) 
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 
 - Your team has started working on a project to create a `Bookstore` Application as Web Service.  
 
@@ -68,10 +72,14 @@ Bookstore Web API Application aims to create a bookstore web service using Docke
 
 ```text
 <<<<<<< HEAD
+<<<<<<< HEAD
 202-dockerization-bookstore-api-on-python-flask-mysql (folder)
 =======
 203-dockerization-bookstore-api-on-python-flask-mysql (folder)
 >>>>>>> 5a1c9f02536c3014ed2890184331e4ede12e11fb
+=======
+202-dockerization-bookstore-api-on-python-flask-mysql (folder)
+>>>>>>> 52c97c4e33de0c84d6322f78c932ceafcd7b54a5
 |
 |----readme.md          # Given to the students (Definition of the project)
 |----bookstore-api.py   # Given to the students (Python Flask Web API)
