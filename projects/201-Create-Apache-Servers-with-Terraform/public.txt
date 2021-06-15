@@ -1,0 +1,2 @@
+apache sever 2 public ip is 107.23.11.79 
+apache sever 1 public ip is 52.23.237.156 
