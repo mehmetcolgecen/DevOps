@@ -109,13 +109,6 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-- Start and enable `kubelet` service.
-
-```bash
-sudo systemctl start kubelet
-sudo systemctl enable kubelet
-```
-
 - Add the current user to the `Docker group`, so that the `Docker commands` can be run without `sudo`.
 
 ```bash
