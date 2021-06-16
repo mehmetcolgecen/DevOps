@@ -26,7 +26,6 @@ At the end of the this hands-on training, students will be able to;
 
 - Part 4 - Deploying a Simple Nginx Server on Kubernetes
 
-- Part 5  - Adding Master or Worker Node
 
 ## Part 1 - Setting Up Kubernetes Environment on All Nodes
 
@@ -352,41 +351,6 @@ kubectl get pods
 >  sudo netstat -lnp | grep 1025
 >  sudo kill <process-id>
 >  ```
-
-## Part 5 - Adding master or worker node
-```shell
-kubeadm token create --help | less
-```
-To create a new certificate key you must use `kubeadm init phase upload-certs --upload-certs`
-
-```shell
-sudo kubeadm init phase upload-certs --upload-certs
-
-W0930 13:31:46.569841    7809 configset.go:348] WARNING: kubeadm cannot validate component configs for API groups [kubelet.config.k8s.io kubeproxy.config.k8s.io]
-[upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
-[upload-certs] Using certificate key:
-64d2cd309721253168568aacd418eb5c4d0c1d09a1fe6a8906fb929a6e1ebec6
-```
-
-- To create a bootstrap token use the `kubeadm token create` command. When used together with `--print-join-command`, print the full `kubeadm join` flag needed to join the cluster as a control-plane.
-
-```shell
-sudo kubeadm token create  --certificate-key 64d2cd309721253168568aacd418eb5c4d0c1d09a1fe6a8906fb929a6e1ebec6 --print-join-command
-
-W0930 13:37:01.510930   13146 configset.go:348] WARNING: kubeadm cannot validate component configs for API groups [kubelet.config.k8s.io kubeproxy.config.k8s.io]
-kubeadm join 192.20.10.150:6443 --token tc1gh1.t216ykzitqu2f9bc     --discovery-token-ca-cert-hash sha256:ecb9724ae3e69fbfc65a8350184b3a2dbfce891e172029df6a282068fa9db90b     --control-plane --certificate-key 64d2cd309721253168568aacd418eb5c4d0c1d09a1fe6a8906fb929a6e1ebec6 
-```
-> Not: Token-key valid for only a few hours.
-
-## For join as worker node
-```shell
-sudo kubeadm join 192.20.10.150:6443 --token tc1gh1.t216ykzitqu2f9bc     --discovery-token-ca-cert-hash sha256:ecb9724ae3e69fbfc65a8350184b3a2dbfce891e172029df6a282068fa9db90b 
-```
-
-## For join as master node
-```shell
-sudo kubeadm join 192.20.10.150:6443 --token tc1gh1.t216ykzitqu2f9bc     --discovery-token-ca-cert-hash sha256:ecb9724ae3e69fbfc65a8350184b3a2dbfce891e172029df6a282068fa9db90b     --control-plane --certificate-key 64d2cd309721253168568aacd418eb5c4d0c1d09a1fe6a8906fb929a6e1ebec6 --apiserver-advertise-address <new master ip>
-```
 
 
 # References
