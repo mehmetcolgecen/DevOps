@@ -56,6 +56,7 @@ At the end of the this hands-on training, students will be able to;
 |TCP|Inbound|10250|Kubelet API|Self, Control plane|
 |TCP|Inbound|30000-32767|NodePort Services†|All|
 |TCP|Inbound|22|remote access with ssh|Self|
+|UDP|Inbound|8472|Cluster-Wide Network Comm. - Flannel VXLAN|Self|
 
 > **Ignore this section for AWS instances. But, it must be applied for real servers/workstations.**
 >
