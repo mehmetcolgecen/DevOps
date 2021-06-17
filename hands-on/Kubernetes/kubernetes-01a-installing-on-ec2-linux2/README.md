@@ -342,7 +342,7 @@ kubectl get pods
 > ```bash
 >  sudo rm /etc/kubernetes/kubelet.conf
 >  sudo rm /etc/kubernetes/pki/ca.crt
->  sudo netstat -lnp | grep 1025
+>  sudo netstat -lnp | grep 10250
 >  sudo kill <process-id>
 >  ```
 
