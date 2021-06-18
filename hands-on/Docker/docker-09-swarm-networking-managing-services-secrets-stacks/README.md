@@ -36,9 +36,9 @@ At the end of the this hands-on training, students will be able to;
 
 ## Part 1 - Launch Docker Machine Instances and Connect with SSH
 
-- Launch `five` Compose enabled Docker machines on Amazon Linux 2 with security group allowing SSH connections using the of [Clarusway Docker Swarm Cloudformation Template](./clarusway-docker-swarm-cfn-template.yml).
+1. Launch `five` Compose enabled Docker machines on Amazon Linux 2 with security group allowing SSH connections using the of [Clarusway Docker Swarm Cloudformation Template](./clarusway-docker-swarm-cfn-template.yml).
 
-- Connect to your instances with SSH.
+2. Connect to your instances with SSH.
 
 ```bash
 ssh -i .ssh/call-training.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazonaws.com
@@ -46,7 +46,7 @@ ssh -i .ssh/call-training.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazon
 
 ## Part 2 - Set up a Swarm Cluster with Manager and Worker Nodes
 
-- Prerequisites (Those prerequisites are satisfied within cloudformation template in Part 1)
+3. Prerequisites (Those prerequisites are satisfied within cloudformation template in Part 1)
 
   - Five EC2 instances on Amazon Linux 2 with `Docker` and `Docker Compose` installed.
 
@@ -60,7 +60,7 @@ ssh -i .ssh/call-training.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazon
 
     - SSH port 22 from 0.0.0.0\0 (for increased security replace this with your own IP)
 
-- Initialize `docker swarm` with Private IP and assign your first docker machine as manager:
+4. Initialize `docker swarm` with Private IP and assign your first docker machine as manager:
 
 ```bash
 docker swarm init
@@ -68,31 +68,31 @@ docker swarm init
 docker swarm init --advertise-addr <Private IPs>
 ```
 
-- Check if the `docker swarm` is active or not.
+5. Check if the `docker swarm` is active or not.
 
 ```bash
 docker info
 ```
 
-- Get the manager token with `docker swarm join-token manager` command.
+6. Get the manager token with `docker swarm join-token manager` command.
 
 ```bash
 docker swarm join-token manager
 ```
 
-- Add second and third Docker Machine instances as manager nodes, by connecting with SSH and running the given command above.
+7. Add second and third Docker Machine instances as manager nodes, by connecting with SSH and running the given command above.
 
 ```bash
 docker swarm join --token <manager_token> <manager_ip>:2377
 ```
 
-- Add fourth and fifth Docker Machine instances as worker nodes. (Run `docker swarm join-token worker` command to get join-token for worker, if needed)
+8. Add fourth and fifth Docker Machine instances as worker nodes. (Run `docker swarm join-token worker` command to get join-token for worker, if needed)
 
 ```bash
 docker swarm join --token <worker_token> <manager_ip>:2377
 ```
 
-- List the connected nodes in `Swarm`.
+9. List the connected nodes in `Swarm`.
 
 ```bash
 docker node ls
@@ -100,42 +100,42 @@ docker node ls
 
 ## Part 3 - Using Overlay Network in Docker Swarm
 
-- List Docker networks and explain overlay network (ingress)
+10. List Docker networks and explain overlay network (ingress)
 
 ```bash
 docker network ls
 docker network inspect ingress
 ```
 
-- Create a user defined overlay network.
+11. Create a user defined overlay network.
 
 ```bash
 docker network create -d overlay clarus-net
 ```
 
-- Explain user-defined overlay network (clarus-net)
+12. Explain user-defined overlay network (clarus-net)
 
 ```bash
 docker network inspect clarus-net
 ```
 
-- Create a new service with 3 replicas.
+13. Create a new service with 3 replicas.
 
 ```bash
 docker service create --name webserver --network clarus-net -p 80:80 -d --replicas=3 clarusway/container-info:1.0
 ```
 
-- List the tasks of `webserver` service, detect the nodes which is running the task and which is not.
+14. List the tasks of `webserver` service, detect the nodes which is running the task and which is not.
 
 ```bash
 docker service ps webserver
 ```
 
-- Check the URLs of nodes that is running the task with `http://<ec2-public-hostname-of-node>` in the browser and show that the app is accessible, and explain `Container Info` on the app page. (`Host` is the name of container hosting the app, `Network Information` is giving IP addresses attached to `container` by different networks, for example;  `10.0.1.3 from clarus-net`, `172.18.0.3 from docker_gwbridge`, `10.0.0.8 from ingress network`  )
+15. Check the URLs of nodes that is running the task with `http://<ec2-public-hostname-of-node>` in the browser and show that the app is accessible, and explain `Container Info` on the app page. (`Host` is the name of container hosting the app, `Network Information` is giving IP addresses attached to `container` by different networks, for example;  `10.0.1.3 from clarus-net`, `172.18.0.3 from docker_gwbridge`, `10.0.0.8 from ingress network`  )
 
-- Check the URLs of nodes that is not running the task with `http://<ec2-public-hostname-of-node>` in the browser and show that the app is not accessible.
+16. Check the URLs of nodes that is not running the task with `http://<ec2-public-hostname-of-node>` in the browser and show that the app is not accessible.
 
-- Add following rules to security group of the nodes to enable the ingress network in the swarm and explain `swarm routing mesh`. *All nodes participate in an `ingress routing mesh`. The `routing mesh` enables each node in the `swarm` to accept connections on published ports for any service running in the swarm, **even if there’s no task running on the node**. The routing mesh routes all incoming requests to published ports on available nodes to an active container.* [Using swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/#bypass-the-routing-mesh)
+17. Add following rules to security group of the nodes to enable the ingress network in the swarm and explain `swarm routing mesh`. *All nodes participate in an `ingress routing mesh`. The `routing mesh` enables each node in the `swarm` to accept connections on published ports for any service running in the swarm, **even if there’s no task running on the node**. The routing mesh routes all incoming requests to published ports on available nodes to an active container.* [Using swarm mode routing mesh](https://docs.docker.com/engine/swarm/ingress/#bypass-the-routing-mesh)
 
   - For container network discovery -> Protocol: TCP,  Port: 7946, Source: security group itself
 
@@ -143,51 +143,51 @@ docker service ps webserver
 
   - For the container ingress network -> Protocol: UDP,  Port: 4789, Source: security group itself
 
-- Check the URLs of nodes that is not running the task with `http://<ec2-public-hostname-of-node>` in the browser and show that the app is **now** accessible.
+18. Check the URLs of nodes that is not running the task with `http://<ec2-public-hostname-of-node>` in the browser and show that the app is **now** accessible.
 
-- Create a service for `clarusway/clarusdb` and connect it clarus-net.
+19. Create a service for `clarusway/clarusdb` and connect it clarus-net.
 
 ```bash
 docker service create --name clarus-db --network clarus-net clarusway/clarusdb
 ```
 
-- List services
+20. List services
 
 ```bash
 docker service ls
 ```
 
-- List the tasks and go to terminal of ec2-instance which is running `clarus-db` task.
+21. List the tasks and go to terminal of ec2-instance which is running `clarus-db` task.
 
 ```bash
 docker service ps clarus-db
 ```
 
-- List the containers in ec2-instance which is running `clarus-db` task.
+22. List the containers in ec2-instance which is running `clarus-db` task.
 
 ```bash
 docker container ls
 ```
 
-- Connect the `clarus-db` container.
+23. Connect the `clarus-db` container.
 
 ```bash
 docker container exec -it <container_id> sh
 ```
 
-- Ping the webserver service and explain DNS resolution. (When we ping the `Service Name`, it returns Virtual IP of `webserver`).
+24. Ping the webserver service and explain DNS resolution. (When we ping the `Service Name`, it returns Virtual IP of `webserver`).
 
 ```bash
 ping webserver
 ```
 
-- Explain the `load balancing` with the curl command. (Pay attention to the host when input `curl http://webserver` )
+25. Explain the `load balancing` with the curl command. (Pay attention to the host when input `curl http://webserver` )
 
 ```bash
 curl http://webserver
 ```
 
-- Remove the services.
+26. Remove the services.
 
 ```bash
 docker service rm webserver clarus-db
@@ -195,41 +195,41 @@ docker service rm webserver clarus-db
 
 ## Part 4 - Managing Sensitive Data with Docker Secrets
 
-- Explain [how to manage sensitive data with Docker secrets](https://docs.docker.com/engine/swarm/secrets/).
+27. Explain [how to manage sensitive data with Docker secrets](https://docs.docker.com/engine/swarm/secrets/).
 
-- Create two files named `name.txt` and `password.txt`.
+28. Create two files named `name.txt` and `password.txt`.
 
 ```bash
 echo "User" > name.txt
 echo "clarus123@" > password.txt
 ```
 
-- Create docker secrets for both.
+29. Create docker secrets for both.
 
 ```bash
 docker secret create username ./name.txt
 docker secret create userpassword ./password.txt
 ```
 
-- List docker secrets.
+30. List docker secrets.
 
 ```bash
 docker secret ls
 ```
 
-- Create a new service with secrets.
+31. Create a new service with secrets.
 
 ```bash
 docker service create -d --name secretdemo --secret username --secret userpassword clarusway/container-info:1.0
 ```
 
-- List the tasks and go to terminal of ec2-instance which is running `secretdemo` task.
+32. List the tasks and go to terminal of ec2-instance which is running `secretdemo` task.
 
 ```bash
 docker service ps secretdemo
 ```
 
-- Connect the `secretdemo` container and show the secrets.
+33. Connect the `secretdemo` container and show the secrets.
 
 ```bash
 docker container exec -it <container_id> sh
@@ -239,20 +239,20 @@ cat username
 cat userpassword
 ```
 
-- To update the secrets; create another secret using `standard input` and remove the old one.(We can't update the secrets.)
+34. To update the secrets; create another secret using `standard input` and remove the old one.(We can't update the secrets.)
 
 ```bash
 echo "qwert@123" | docker secret create newpassword -
 docker service update --secret-rm userpassword --secret-add newpassword secretdemo
 ```
 
-- To check the updated secret, list the tasks and go to terminal of ec2-instance which is running `secretdemo` task.
+35. To check the updated secret, list the tasks and go to terminal of ec2-instance which is running `secretdemo` task.
 
 ```bash
 docker service ps secretdemo
 ```
 
-- Connect the `secretdemo` container and show the secrets.
+36. Connect the `secretdemo` container and show the secrets.
 
 ```bash
 docker container exec -it <container_id> sh
@@ -263,16 +263,16 @@ cat newpassword
 
 ## Part 5 - Managing Docker Stack
 
-- Explain `Docker Stack`.
+37. Explain `Docker Stack`.
 
-- Create a folder for the project and change into your project directory
+38. Create a folder for the project and change into your project directory
   
 ```bash
 mkdir todoapi
 cd todoapi
 ```
 
-- Create a file called `docker-compose.yml` in your project folder with following setup and explain it.
+39. Create a file called `docker-compose.yml` in your project folder with following setup and explain it.
 
 ```yaml
 version: "3.8"
@@ -303,31 +303,31 @@ networks:
         driver: overlay
 ```
 
-- Deploy a new stack.
+40. Deploy a new stack.
 
 ```bash
 docker stack deploy -c ./docker-compose.yml clarus-todoapi
 ```
 
-- List stacks.
+41. List stacks.
 
 ```bash
 docker stack ls
 ```
 
-- List the services in the stack.
+42. List the services in the stack.
 
 ```bash
 docker stack services clarus-todoapi
 ```
 
-- List the tasks in the stack
+43. List the tasks in the stack
 
 ```bash
 docker stack ps clarus-todoapi
 ```
 
-- Check if the `clarus-todoapi` is running by entering `http://<ec2-host-name>` in a browser.
+44. Check if the `clarus-todoapi` is running by entering `http://<ec2-host-name>` in a browser.
 
 - Remove stacks.
 
@@ -337,20 +337,20 @@ docker stack rm clarus-todoapi
 
 ## Part 6 - Running WordPress as a Docker Stack
 
-- Create a folder for the project and change into your project directory
+45. Create a folder for the project and change into your project directory
   
 ```bash
 mkdir wordpress
 cd wordpress
 ```
 
-- Create a file called `wp_password.txt` containing a password in your project folder.
+46. Create a file called `wp_password.txt` containing a password in your project folder.
 
 ```bash
 echo "Kk12345" > wp_password.txt
 ```
 
-- Create a file called `docker-compose.yml` in your project folder with following setup and explain it.
+47. Create a file called `docker-compose.yml` in your project folder with following setup and explain it.
 
 ```yaml
 version: "3.8"
@@ -397,33 +397,33 @@ secrets:
         file: wp_password.txt
 ```
 
-- Deploy a new stack.
+48. Deploy a new stack.
 
 ```bash
 docker stack deploy -c ./docker-compose.yml wpclarus
 ```
 
-- List stacks.
+49. List stacks.
 
 ```bash
 docker stack ls
 ```
 
-- List the services in the stack.
+50. List the services in the stack.
 
 ```bash
 docker stack services wpclarus
 ```
 
-- List the tasks in the stack
+51. List the tasks in the stack
 
 ```bash
 docker stack ps wpclarus
 ```
 
-- Check if the `wordpress` is running by entering `http://<ec2-host-name>` in a browser.
+52. Check if the `wordpress` is running by entering `http://<ec2-host-name>` in a browser.
 
-- Remove stacks.
+53. Remove stacks.
 
 ```bash
 docker stack rm wpclarus
