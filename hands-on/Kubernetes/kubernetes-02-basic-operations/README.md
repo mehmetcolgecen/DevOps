@@ -335,7 +335,7 @@ metadata:
   labels:
     app: container-info
   annotations:
-    kubernetes.io/change-cause: deploy/clarus-deploy is set as container-info=clarusways/container-info:1.0
+    kubernetes.io/change-cause: deploy/clarus-deploy is set as container-info=clarusway/container-info:1.0
 spec:
   replicas: 3
   selector:
@@ -348,7 +348,7 @@ spec:
     spec:
       containers:
       - name: container-info
-        image: clarusways/container-info:1.0
+        image: clarusway/container-info:1.0
         ports:
         - containerPort: 80
 ```
@@ -365,7 +365,7 @@ kubectl apply -f clarus-deploy.yaml
 kubectl get deploy,rs,po -l app=container-info
 ```
 
-- Describe deployment and note the image of the deployment. In our case, it is clarusways/container-info:1.0.
+- Describe deployment and note the image of the deployment. In our case, it is clarusway/container-info:1.0.
 
 ```bash
 kubectl describe deploy clarus-deploy
@@ -386,7 +386,7 @@ kubectl rollout history deploy clarus-deploy --revision=1
 - Upgrade image.
 
 ```bash
-kubectl set image deploy clarus-deploy container-info=clarusways/container-info:2.0 --record=true
+kubectl set image deploy clarus-deploy container-info=clarusway/container-info:2.0 --record=true
 ```
 
 - Show the rollout history.
@@ -435,12 +435,12 @@ metadata:
 ```yaml
 ...
 ...
-    kubernetes.io/change-cause: kubectl set image deploy clarus-deploy container-info=clarusways/container-info:3.0
+    kubernetes.io/change-cause: kubectl set image deploy clarus-deploy container-info=clarusway/container-info:3.0
 ...
 ...
     spec:
       containers:
-      - image: clarusways/container-info:3.0
+      - image: clarusway/container-info:3.0
 ...
 ...
 ```
