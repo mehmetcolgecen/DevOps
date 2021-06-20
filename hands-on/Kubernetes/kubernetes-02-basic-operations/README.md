@@ -85,7 +85,7 @@ metadata:
 spec:
   containers:
   - name: mynginx
-    image: nginx:1.19
+    image: nginx
     ports:
     - containerPort: 80
 ```
@@ -158,7 +158,7 @@ spec:
     spec:
       containers:
       - name: mynginx
-        image: nginx:1.19
+        image: nginx
         ports:
         - containerPort: 80
 ```
@@ -228,7 +228,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.19
+        image: nginx
         ports:
         - containerPort: 80
 ```
