@@ -1,4 +1,4 @@
-# Coding Challenge - 019: Calculator
+# Coding Challenge - 006: Calculator
 
 The purpose of this coding challenge is to write a program that performs basic calculations (+,-,/,*).
 
