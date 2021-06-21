@@ -61,6 +61,8 @@ List of hands-on trainings within DevOps as follows;
 
 - [Hands-on Kubernetes-01 : Installing Kubernetes on Ubuntu 20.04 running on AWS EC2 Instances](./Kubernetes/kubernetes-01a-installing-on-ec2-linux2/)
 
+- [Hands-on Kubernetes-02 : Kubernetes Basic Operations](./Kubernetes/kubernetes-02-basic-operations/)
+
 # Terraform
 
 - [Hands-on Terraform-01 : Terraform Installation and Basic Operations](./Terraform/terraform-01_Installation_Basic_Operations/Handson-Terraform-Terraform_Part_1-Installation_Basic_Operations.md)
