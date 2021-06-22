@@ -39,6 +39,8 @@ List of hands-on trainings within DevOps as follows;
 
 - [Hands-on Kubernetes-02 : Kubernetes Basic Operations](./Kubernetes/kubernetes-02-basic-operations/)
 
+- [Hands-on Kubernetes-03 : Kubernetes Networking and Service Discovery](./Kubernetes/kubernetes-03-networking-service-discovery/)
+
 # Terraform
 
 - [Hands-on Terraform-01 : Terraform Installation and Basic Operations](./Terraform/terraform-01_Installation_Basic_Operations/Handson-Terraform-Terraform_Part_1-Installation_Basic_Operations.md)
