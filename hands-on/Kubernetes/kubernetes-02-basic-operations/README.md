@@ -24,12 +24,12 @@ At the end of the this hands-on training, students will be able to;
 
 ## Part 1 - Setting up the Kubernetes Cluster
 
-- Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](./cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
+1. Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](./cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
 
 >*Note: If you have problem with kubernetes cluster, you can use this link for lesson.*
 >https://www.katacoda.com/courses/kubernetes/playground
 
-- Check if Kubernetes is running and nodes are ready.
+2. Check if Kubernetes is running and nodes are ready.
 
 ```bash
 kubectl cluster-info
@@ -38,7 +38,7 @@ kubectl get node
 
 ## Part 2 - Basic Operations in Kubernetes
 
-- Show the names and short names of the supported API resources as shown in the example:
+3. Show the names and short names of the supported API resources as shown in the example:
 
 |NAME|SHORTNAMES|
 |----|----------|
@@ -53,13 +53,13 @@ kubectl get node
 kubectl api-resources
 ```
 
-- Get the documentation of `Nodes` and its fields.
+4. Get the documentation of `Nodes` and its fields.
 
 ```bash
 kubectl explain nodes
 ```
 
-- View the nodes in the cluster using.
+5. View the nodes in the cluster using.
 
 ```bash
 kubectl get nodes
@@ -67,13 +67,13 @@ kubectl get nodes
 
 ### pods
 
-- Get the documentation of `Pods` and its fields.
+6. Get the documentation of `Pods` and its fields.
 
 ```bash
 kubectl explain pods
 ```
   
-- Create yaml file named `mypod.yaml` and explain fields of it.
+7. Create yaml file named `mypod.yaml` and explain fields of it.
 
 ```yaml
 apiVersion: v1
@@ -96,31 +96,31 @@ spec:
 kubectl create -f mypod.yaml
 ```
 
-- List the pods.
+8. List the pods.
 
 ```bash
 kubectl get pods
 ```
 
-- List pods in `ps output format` with more information (such as node name).
+9. List pods in `ps output format` with more information (such as node name).
   
 ```bash
 kubectl get pods -o wide
 ```
 
-- Show details of pod.
+10. Show details of pod.
 
 ```bash
 kubectl describe pods/nginx-pod
 ```
 
-- Show details of pod in `yaml format`.
+11. Show details of pod in `yaml format`.
   
 ```bash
 kubectl get pods/nginx-pod -o yaml
 ```
 
-- Delete the pod.
+12. Delete the pod.
 
 ```bash
 kubectl delete -f mypod.yaml
@@ -130,13 +130,13 @@ kubectl delete pod nginx-pod
 
 ### ReplicaSets
 
-- Get the documentation of `replicasets` and its fields.
+13. Get the documentation of `replicasets` and its fields.
 
 ```bash
 kubectl explain replicaset
 ```
 
-- Create yaml file named `myreplicaset.yaml` and explain fields of it.
+14. Create yaml file named `myreplicaset.yaml` and explain fields of it.
 
 ```yaml
 apiVersion: apps/v1
@@ -163,31 +163,31 @@ spec:
         - containerPort: 80
 ```
 
-- Create the replicaset with `kubectl apply` command.
+15. Create the replicaset with `kubectl apply` command.
 
 ```bash
 kubectl apply -f myreplicaset.yaml
 ```
 
-- List the replicasets.
+16. List the replicasets.
 
 ```bash
 kubectl get replicaset
 ```
 
-- List pods with more information.
+17. List pods with more information.
   
 ```bash
 kubectl get pods -o wide
 ```
 
-- Show details of replicasets.
+18. Show details of replicasets.
 
 ```bash
 kubectl describe replicaset <replicaset-name>
 ```
 
-- Delete replicasets
+19. Delete replicasets
 
 ```bash
 kubectl delete replicaset <replicaset-name>
@@ -201,13 +201,13 @@ The .spec.selector field and .spec.template.metadata field must be same. There a
 
 ### Deployments
 
-- Get the documentation of `Deployments` and its fields.
+20. Get the documentation of `Deployments` and its fields.
 
 ```bash
 kubectl explain deployments
 ```
 
-- Create yaml file named `mydeployment.yaml` and explain fields of it.
+21. Create yaml file named `mydeployment.yaml` and explain fields of it.
 
 ```yaml
 apiVersion: apps/v1
@@ -233,43 +233,43 @@ spec:
         - containerPort: 80
 ```
 
-- Create the deployment with `kubectl apply` command.
+22. Create the deployment with `kubectl apply` command.
   
 ```bash
 kubectl apply -f mydeployment.yaml
 ```
 
-- List the deployments.
+23. List the deployments.
 
 ```bash
 kubectl get deployments
 ```
 
-- List pods with more information.
+24. List pods with more information.
   
 ```bash
 kubectl get pods -o wide
 ```
 
-- Show details of deployments.
+25. Show details of deployments.
 
 ```bash
 kubectl describe deploy/nginx-deployment
 ```
 
-- Print the logs for a container in a pod.
+26. Print the logs for a container in a pod.
 
 ```bash
 kubectl logs <pod-name>
 ```
 
-- If there is a multi-container pod, we can print logs of one container.
+27. If there is a multi-container pod, we can print logs of one container.
 
 ```bash
 kubectl logs <pod-name> -c <container-name>
 ```
 
-- Execute a command in a container.
+28. Execute a command in a container.
 
 ```bash
 kubectl exec <pod-name> -- date
@@ -279,38 +279,38 @@ kubectl exec <pod-name> -- date
 kubectl exec <pod-name> -- cat /usr/share/nginx/html/index.html
 ```
 
-- Open a bash shell in a container.
+29. Open a bash shell in a container.
 
 ```bash
 kubectl exec -it <pod-name> -- bash
 ```
 
-- List the ReplicaSets.
+30. List the ReplicaSets.
 
 ```bash
 kubectl get rs
 ```
 
-- Show details of ReplicaSets.
+31. Show details of ReplicaSets.
 
 ```bash
 kubectl describe rs <rs-name>
 ```
 
-- Scale the deployment up to five replicas.
+32. Scale the deployment up to five replicas.
 
 ```bash
 kubectl scale deploy nginx-deployment --replicas=5
 ```
 
-- Delete a pod and show new pod is immediately created.
+33. Delete a pod and show new pod is immediately created.
 
 ```bash
 kubectl delete pod <pod-name>
 kubectl get pods
 ```
 
-- Delete deployments
+34. Delete deployments
 
 ```bash
 kubectl delete deploy <deployment-name>
@@ -318,14 +318,14 @@ kubectl delete deploy <deployment-name>
 
 ## Part 3 - Deployment Rolling Update and Rollback in Kubernetes
 
-- Create a new folder name it deployment-lesson.
+35. Create a new folder name it deployment-lesson.
 
 ```bash
 mkdir deployment-lesson
 cd deployment-lesson
 ```
 
-- Create a clarus-deploy.yaml and input text below. Pay attention that image version is 1.0.
+36. Create a clarus-deploy.yaml and input text below. Pay attention that image version is 1.0.
 
 ```yaml
 apiVersion: apps/v1
@@ -353,68 +353,68 @@ spec:
         - containerPort: 80
 ```
 
-- Create the deployment with `kubectl apply` command.
+37. Create the deployment with `kubectl apply` command.
 
 ```bash
 kubectl apply -f clarus-deploy.yaml
 ```
 
-- List the `Deployment`, `ReplicaSet` and `Pods` of `clarus-deploy` deployment using a label and note the name of ReplicaSet.
+38. List the `Deployment`, `ReplicaSet` and `Pods` of `clarus-deploy` deployment using a label and note the name of ReplicaSet.
 
 ```bash
 kubectl get deploy,rs,po -l app=container-info
 ```
 
-- Describe deployment and note the image of the deployment. In our case, it is clarusway/container-info:1.0.
+38. Describe deployment and note the image of the deployment. In our case, it is clarusway/container-info:1.0.
 
 ```bash
 kubectl describe deploy clarus-deploy
 ```
 
-- View previous rollout revisions.
+40. View previous rollout revisions.
 
 ```bash
 kubectl rollout history deploy clarus-deploy
 ```
 
-- Display details with revision number, in our case, is 1. And note name of image.
+41. Display details with revision number, in our case, is 1. And note name of image.
 
 ```bash
 kubectl rollout history deploy clarus-deploy --revision=1
 ```
 
-- Upgrade image.
+42. Upgrade image.
 
 ```bash
 kubectl set image deploy clarus-deploy container-info=clarusway/container-info:2.0 --record=true
 ```
 
-- Show the rollout history.
+43. Show the rollout history.
 
 ```bash
 kubectl rollout history deploy clarus-deploy
 ```
 
-- Display details about the revisions.
+44. Display details about the revisions.
 
 ```bash
 kubectl rollout history deploy clarus-deploy --revision=1
 kubectl rollout history deploy clarus-deploy --revision=2
 ```
 
-- List the `Deployment`, `ReplicaSet` and `Pods` of `clarus-deploy` deployment using a label and explain ReplicaSets.
+45. List the `Deployment`, `ReplicaSet` and `Pods` of `clarus-deploy` deployment using a label and explain ReplicaSets.
 
 ```bash
 kubectl get deploy,rs,po -l app=container-info
 ```
 
-- Upgrade image with kubectl edit commands.
+46. Upgrade image with kubectl edit commands.
 
 ```bash
 kubectl edit deploy/clarus-deploy
 ```
 
-- We will see an output like below.
+47. We will see an output like below.
 
 ```yaml
 # Please edit the object below. Lines beginning with a '#' will be ignored,
@@ -430,7 +430,7 @@ metadata:
     ...
 ```
 
-- Change the `metadata.annotations.kubernetes.io/change-cause` and `spec.template.spec.containers.image` fields as below.
+48. Change the `metadata.annotations.kubernetes.io/change-cause` and `spec.template.spec.containers.image` fields as below.
 
 ```yaml
 ...
@@ -445,13 +445,13 @@ metadata:
 ...
 ```
 
-- Show the rollout history.
+49. Show the rollout history.
 
 ```bash
 kubectl rollout history deploy clarus-deploy
 ```
 
-- Display details about the revisions.
+50. Display details about the revisions.
 
 ```bash
 kubectl rollout history deploy clarus-deploy --revision=1
@@ -459,19 +459,19 @@ kubectl rollout history deploy clarus-deploy --revision=2
 kubectl rollout history deploy clarus-deploy --revision=3
 ```
 
-- List the `Deployment`, `ReplicaSet` and `Pods` of `clarus-deploy` deployment using a label and explain ReplicaSets.
+51. List the `Deployment`, `ReplicaSet` and `Pods` of `clarus-deploy` deployment using a label and explain ReplicaSets.
 
 ```bash
 kubectl get deploy,rs,po -l app=container-info
 ```
 
-- Rollback to `revision 1`.
+52. Rollback to `revision 1`.
 
 ```bash
 kubectl rollout undo deploy clarus-deploy --to-revision=1
 ```
 
-- Show the rollout history and show that we have revision 2, 3 and 4. Explain that original revision, which is `revision 1`, becomes `revision 4`.
+53. Show the rollout history and show that we have revision 2, 3 and 4. Explain that original revision, which is `revision 1`, becomes `revision 4`.
 
 ```bash
 kubectl rollout history deploy clarus-deploy
@@ -480,19 +480,19 @@ kubectl rollout history deploy clarus-deploy --revision=2
 kubectl rollout history deploy clarus-deploy --revision=4
 ```
 
-- Try to pull up the `revision 1`, that is no longer available.
+54. Try to pull up the `revision 1`, that is no longer available.
 
 ```bash
 kubectl rollout history deploy clarus-deploy --revision=1
 ```
 
-- List the `Deployment`, `ReplicaSet` and `Pods` of `mynginx` deployment using a label, and explain that the original ReplicaSet has been scaled up back to three and second ReplicaSet has been scaled down to zero.
+55. List the `Deployment`, `ReplicaSet` and `Pods` of `mynginx` deployment using a label, and explain that the original ReplicaSet has been scaled up back to three and second ReplicaSet has been scaled down to zero.
 
 ```bash
 kubectl get deploy,rs,po -l app=container-info
 ```
 
-- Delete the deployment.
+56. Delete the deployment.
 
 ```bash
 kubectl delete deploy -l app=container-info
@@ -500,7 +500,7 @@ kubectl delete deploy -l app=container-info
 
 ## Part 4 - Namespaces in Kubernetes
 
-- List the current namespaces in a cluster using and explain them. *Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called `namespaces`.*
+57. List the current namespaces in a cluster using and explain them. *Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called `namespaces`.*
 
 ```bash
 kubectl get namespace
@@ -523,7 +523,7 @@ kube-system       Active   118m
 >### kube-node-lease
 >This namespace for the lease objects associated with each node which improves the performance of the node  heartbeats as the cluster scales.
 
-- Create a new YAML file called `my-namespace.yaml` with the following content.
+58. Create a new YAML file called `my-namespace.yaml` with the following content.
 
 ```yaml
 apiVersion: v1
@@ -532,44 +532,44 @@ metadata:
   name: clarus-namespace
 ```
 
-- Create a namespace using the `my-namespace.yaml` file.
+59. Create a namespace using the `my-namespace.yaml` file.
 
 ```bash
 kubectl apply -f ./my-namespace.yaml
 ```
 
-- Alternatively, you can create namespace using below command:
+60. Alternatively, you can create namespace using below command:
 
 ```bash
 kubectl create namespace <namespace-name>
 ```
 
-- Create pods in each namespace.
+61. Create pods in each namespace.
 
 ```bash
 kubectl create deployment default-ns --image=nginx
 kubectl create deployment clarus-ns --image=nginx  -n=clarus-namespace
 ```
 
-- List the deployments in `default` namespace.
+62. List the deployments in `default` namespace.
 
 ```bash
 kubectl get deployment
 ```
 
-- List the deployments in `clarus-namespace`.
+63. List the deployments in `clarus-namespace`.
 
 ```bash
 kubectl get deployment -n clarus-namespace
 ```
 
-- List the all deployments.
+64. List the all deployments.
 
 ```bash
 kubectl get deployment -o wide --all-namespaces
 ```
 
-- Delete the namespace.
+65. Delete the namespace.
 
 ```bash
 kubectl delete namespaces clarus-namespace
