@@ -47,7 +47,7 @@ Resources:
               - 'sts:AssumeRole'
       ManagedPolicyArns:
         - !Ref InstanceConnectPolicy
-  
+
   EC2ConnectProfile:
     Type: "AWS::IAM::InstanceProfile"
     Properties:
@@ -63,7 +63,6 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-
   WorkersSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -73,28 +72,25 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-
+          
   ManagersSGIngress1:
     Type: "AWS::EC2::SecurityGroupIngress"
     Properties:
       GroupId: !GetAtt ManagersSecurityGroup.GroupId
       IpProtocol: -1 #required
       SourceSecurityGroupId: !GetAtt ManagersSecurityGroup.GroupId
-
   ManagersSGIngress2:
     Type: "AWS::EC2::SecurityGroupIngress"
     Properties:
       GroupId: !GetAtt ManagersSecurityGroup.GroupId
       IpProtocol: -1 #required
       SourceSecurityGroupId: !GetAtt WorkersSecurityGroup.GroupId
-
   WorkersSGIngress1:
     Type: "AWS::EC2::SecurityGroupIngress"
     Properties:
       GroupId: !GetAtt WorkersSecurityGroup.GroupId
       IpProtocol: -1 #required
       SourceSecurityGroupId: !GetAtt WorkersSecurityGroup.GroupId
-
   WorkersSGIngress2:
     Type: "AWS::EC2::SecurityGroupIngress"
     Properties:
@@ -102,9 +98,26 @@ Resources:
       IpProtocol: -1 #required
       SourceSecurityGroupId: !GetAtt ManagersSecurityGroup.GroupId
 
+  SpotLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: K8s-Spot-LT
+      LaunchTemplateData: 
+        InstanceMarketOptions:
+          MarketType: spot
+          SpotOptions:
+            MaxPrice: "0.012"
+            SpotInstanceType: one-time
+
   KubeMaster1:
     Type: AWS::EC2::Instance
+    DependsOn:
+      - SpotLaunchTemplate
     Properties:
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: SpotLaunchTemplate
+        Version: 1
       ImageId: ami-0dba2cb6798deb6d8
       InstanceType: t3a.medium
       KeyName: !Ref KeyPairName
@@ -162,6 +175,10 @@ Resources:
     DependsOn:
       - KubeMaster1
     Properties:
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: SpotLaunchTemplate
+        Version: 1
       ImageId: ami-0dba2cb6798deb6d8
       InstanceType: t3a.medium
       KeyName: !Ref KeyPairName
