@@ -25,7 +25,7 @@ At the end of the this hands-on training, students will be able to;
 
 - The security group must allow  SSH (port 22) and HTTP (8080)
 
-- connect to ec2 free tier instances 
+1. connect to ec2 free tier instances 
   
 ```bash
 ssh -i .ssh/mykey.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazonaws.com
@@ -33,7 +33,7 @@ ssh -i .ssh/mykey.pem ec2-user@ec2-3-133-106-98.us-east-2.compute.amazonaws.com
 
 ## Part 2 - Install Java JDK
 
-- Install Java
+2. Install Java
 
 - For Centos & Fedora (Amazon ec-2 instance)
 ```bash
@@ -43,17 +43,17 @@ sudo yum install java-1.8.0-openjdk -y
 ## Part 3 - Install Tomcat
 
 
-- For Centos & Fedora (Amazon ec-2 instance)
+3. For Centos & Fedora (Amazon ec-2 instance)
   
 ```bash
 sudo yum install unzip wget -y
 ```
 
-- Install Tomcat
+4. Install Tomcat
 
-- Got to https://tomcat.apache.org/download-80.cgi page
+5. Got to https://tomcat.apache.org/download-80.cgi page
 
-- Look at Binary Distributions and copy the link of the `zip`ed one.
+6. Look at Binary Distributions and copy the link of the `zip`ed one.
 
 ```bash
 ...
@@ -66,14 +66,14 @@ tar.gz (pgp, sha512)
 ...
 ```
 
--  Get the tomcat file
+7.  Get the tomcat file
   
 ```bash
 cd /tmp
 wget https://downloads.apache.org/tomcat/tomcat-8/v8.5.59/bin/apache-tomcat-8.5.59.zip
 ```
 
-- Unzip tomcat file and move to `/opt`
+8. Unzip tomcat file and move to `/opt`
   
 ```bash
 unzip apache-tomcat-*.zip
@@ -82,11 +82,11 @@ sudo mv apache-tomcat-8.5.59 /opt/tomcat
 
 ## Part 4 - Configure tomcat
 
-- Now Change Tomcat Server Port
+9. Now Change Tomcat Server Port
 
-- Go to /opt/tomcat/conf/server.xml file
+10. Go to /opt/tomcat/conf/server.xml file
 
-- Search for `Connector` and verify/change the Port Value, save the file.
+11. Search for `Connector` and verify/change the Port Value, save the file.
 
 ```bash
     <Connector port="8080" protocol="HTTP/1.1"
@@ -94,7 +94,7 @@ sudo mv apache-tomcat-8.5.59 /opt/tomcat
                redirectPort="8443" />
 ```
 
-- Change Permission of Scripts in `/opt/tomcat/bin`
+12. Change Permission of Scripts in `/opt/tomcat/bin`
 
 ```bash
 cd /opt/tomcat/bin
@@ -102,16 +102,16 @@ ls -la
 sudo chmod +x *
 ```
 
-- Set Credentials of Tomcat that Jenkins will use.
+13. Set Credentials of Tomcat that Jenkins will use.
 
 ```bash
 cd /opt/tomcat/conf
 ```
-- Update `tomcat-users.xml` file.
+14. Update `tomcat-users.xml` file.
 
-- `manager-script` & `admin-gui` are needed for jenkins to access tomcat.
+15. `manager-script` & `admin-gui` are needed for jenkins to access tomcat.
 
-- Set roles as `manager-script` & `admin-gui` and set password to tomcat as follows:
+16. Set roles as `manager-script` & `admin-gui` and set password to tomcat as follows:
 
 ```bash
   <role rolename="manager-script"/>
@@ -119,12 +119,12 @@ cd /opt/tomcat/conf
   <user username="tomcat" password="tomcat" roles="manager-script,admin-gui"/>
 ```
 
-- Note : Don't forget to remove the xml comment bloks `<!--` and `-->`. Delete these enclosing lines.
+17. Note : Don't forget to remove the xml comment bloks `<!--` and `-->`. Delete these enclosing lines.
 
 
 
 
-- Go to the `/opt/tomcat/webapps/host-manager/META-INF/` and edit file `context.xml`. Actually commenting out the tagged `CookieProcessor` and `Valve` parts.
+18. Go to the `/opt/tomcat/webapps/host-manager/META-INF/` and edit file `context.xml`. Actually commenting out the tagged `CookieProcessor` and `Valve` parts.
 
 ```bash
 <?xml version="1.0" encoding="UTF-8"?>
@@ -155,7 +155,7 @@ cd /opt/tomcat/conf
 </Context>
 ```
 
-- Go to the `/opt/tomcat/webapps/manager/META-INF/` and edit file `context.xml`. Actually commenting out the tagged `CookieProcessor` and `Valve` parts.
+19. Go to the `/opt/tomcat/webapps/manager/META-INF/` and edit file `context.xml`. Actually commenting out the tagged `CookieProcessor` and `Valve` parts.
 
 ```bash
 <?xml version="1.0" encoding="UTF-8"?>
@@ -187,7 +187,7 @@ cd /opt/tomcat/conf
 ```
 
 
-- Restart the tomcat server
+20. Restart the tomcat server
 
 ```bash
 /opt/tomcat/bin/shutdown.sh
@@ -196,23 +196,23 @@ cd /opt/tomcat/conf
 
 ## Part 5 - Auto start of Tomcat server at boot
 
-- In able to auto start Tomcat server at boot, we have to make it a `service`. Service is process that starts with operating system and runs in the background without interacting with the user.
+21. In able to auto start Tomcat server at boot, we have to make it a `service`. Service is process that starts with operating system and runs in the background without interacting with the user.
 
-- Service files are located in /etc/systemd/system.
+22. Service files are located in /etc/systemd/system.
 
-- Go to /etc/systemd/system folder.
+23. Go to /etc/systemd/system folder.
 
 ```bash
 cd /etc/systemd/system
 ```
 
-- In able to declare a service "unit file" must be created. Create a `tomcat.service` file.
+24. In able to declare a service "unit file" must be created. Create a `tomcat.service` file.
 
 ```bash
 sudo vi tomcat.service
 ```
 
-- Copy and paste this code in "tomcat.service" file.
+25. Copy and paste this code in "tomcat.service" file.
 ```
 [Unit]
 Description=Apache Tomcat Web Application Container
@@ -235,21 +235,21 @@ ExecStop=/bin/kill -15 $MAINPID
 WantedBy=multi-user.target
 ```
 
-- Save and exit.
+26. Save and exit.
 
-- Enable Tomcat server.
+27. Enable Tomcat server.
 
 ```bash
 sudo systemctl enable tomcat
 ```
 
-- Start Tomcat server.
+28. Start Tomcat server.
 
 ```bash
 sudo systemctl start tomcat
 ```
 
-- Open your browser, get your Tomcat server ec2 instance Public IPv4 DNS and paste it at address bar with 8080. 
+29. Open your browser, get your Tomcat server ec2 instance Public IPv4 DNS and paste it at address bar with 8080. 
 "http://[ec2-public-dns-name]:8080"
 
 
