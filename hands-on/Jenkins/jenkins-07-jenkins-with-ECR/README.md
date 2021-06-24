@@ -406,11 +406,11 @@ git push
 
 - Explain the built results, and show the output from the shell.
 
-- Go to Jenkins Server instance with SSH. Add `sh 'docker ps -q --filter "name=todo" | grep -q . && docker stop todo && docker rm -fv todo'"` command  before "sh `docker run.......`" command  to the `Deploy` Stage of the the Jenkinsfile 
+- Go to Jenkins Server instance with SSH. Add `sh 'docker rm -f todo` command  before "sh `docker run.......`" command  to the `Deploy` Stage of the the Jenkinsfile 
 
 ```groovy
  
-                sh 'docker ps -q --filter "name=todo" | grep -q . && docker stop todo && docker rm -fv todo'
+                sh 'docker rm -f todo'
  
 ```
 - Show the result.
@@ -481,7 +481,7 @@ aws ecr delete-repository \
             steps {
                 sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "$ECR_REGISTRY"'
                 sh 'docker pull "$ECR_REGISTRY/$APP_REPO_NAME:latest"'
-                sh 'docker ps -q --filter "name=todo" | grep -q . && docker stop todo && docker rm -fv todo'
+                sh 'docker rm -f todo'
                 sh 'docker run --name todo -dp 80:3000 "$ECR_REGISTRY/$APP_REPO_NAME:latest"'
             }
         }
