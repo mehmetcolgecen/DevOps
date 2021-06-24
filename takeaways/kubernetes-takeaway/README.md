@@ -2,4 +2,4 @@
 
 - [Kubernetes Takeaway-02 : Kubernetes Objects](2.KUBERNETES-OBJECTS-cohorts-07-21.pdf) 
 
-- [Kubernetes Takeaway-03 : Kubernetes Objects](3.Kubernetes-Networking-and-Services-cohorts-07-21-day.pdf)
+- [Kubernetes Takeaway-03 : Kubernetes Networking and Services](3.Kubernetes-Networking-and-Services-cohorts-07-21-day.pdf)
