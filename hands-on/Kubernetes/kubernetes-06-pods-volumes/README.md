@@ -342,7 +342,7 @@ kubectl get pv,pvc
 kubectl delete -f .
 ```
 
-### Part 4 - EmptyDir
+## Part 4 - EmptyDir
 
 - An `emptyDir volume` is first created when a Pod is assigned to a node, and exists as long as that Pod is running on that node. 
 - As the name says, the emptyDir volume is initially empty. 
