@@ -20,12 +20,12 @@ At the end of the this hands-on training, students will be able to;
 
 ## Part 1 - Setting up the Kubernetes Cluster
 
-- Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](../kubernetes-02-basic-operations/cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
+1. Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](../kubernetes-02-basic-operations/cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
 
 >*Note: If you have problem with kubernetes cluster, you can use this link for lesson.*
 >https://www.katacoda.com/courses/kubernetes/playground
 
-- Check if Kubernetes is running and nodes are ready.
+2. Check if Kubernetes is running and nodes are ready.
 
 ```bash
 kubectl cluster-info
@@ -36,13 +36,13 @@ kubectl get no
 
 Kubernetes networking addresses four concerns:
 
-- Containers within a Pod use networking to communicate via loopback.
+3. Containers within a Pod use networking to communicate via loopback.
 
-- Cluster networking provides communication between different Pods.
+4. Cluster networking provides communication between different Pods.
 
-- The Service resource lets you expose an application running in Pods to be reachable from outside your cluster.
+5. The Service resource lets you expose an application running in Pods to be reachable from outside your cluster.
 
-- You can also use Services to publish services only for consumption inside your cluster.
+6. You can also use Services to publish services only for consumption inside your cluster.
 
 ### Service
 
@@ -67,34 +67,34 @@ If we were to connect to this Pod to access our application, it would not work o
 `Services` provide network connectivity to Pods that work uniformly across clusters.
 K8s services provide discovery and load balancing. `Service Discovery` is the process of figuring out how to connect to a service.
 
-- Service Discovery is like networking your Containers.
+7. Service Discovery is like networking your Containers.
 
-- DNS in Kubernetes is an `Built-in Service` managed by `Kube-DNS`.
+8. DNS in Kubernetes is an `Built-in Service` managed by `Kube-DNS`.
 
-- DNS Service is used within PODs to find other services running on the same Cluster.
+9. DNS Service is used within PODs to find other services running on the same Cluster.
 
-- Multiple containers running with-in same POD don’t need DNS service, as they can contact each other.
+10. Multiple containers running with-in same POD don’t need DNS service, as they can contact each other.
 
-- Containers within same POD can connect to other container using `PORT` on `localhost`.
+11. Containers within same POD can connect to other container using `PORT` on `localhost`.
 
-- To make DNS work POD always need `Service Definition`.
+12. To make DNS work POD always need `Service Definition`.
 
-- Kube-DNS is a database containing key-value pairs for lookup.
+13. Kube-DNS is a database containing key-value pairs for lookup.
 
-- Keys are names of services and values are IP addresses on which those services are running.
+14. Keys are names of services and values are IP addresses on which those services are running.
 
 ### Defining and Deploying Services
 
-- Let's define a setup to observe the behaviour of `services` in Kubernetes and how they work in practice.
+15. Let's define a setup to observe the behaviour of `services` in Kubernetes and how they work in practice.
 
-- Create a folder and name it service-lessons.
+16. Create a folder and name it service-lessons.
 
 ```bash
 mkdir service-lessons
 cd service-lessons
 ```
 
-- Create `yaml` file named `web-flask.yaml` and explain fields of it.
+17. Create `yaml` file named `web-flask.yaml` and explain fields of it.
 
 ```yaml
 apiVersion: apps/v1
@@ -124,19 +124,19 @@ spec:
         - containerPort: 5000
 ```
 
-- Create the web-flask Deployment.
+18. Create the web-flask Deployment.
   
 ```bash
 kubectl apply -f web-flask.yaml
 ```
 
-- Show the Pods detailed information and learn their IP addresses:
+19. Show the Pods detailed information and learn their IP addresses:
 
 ```bash
 kubectl get pods -o wide
 ```
 
-- We get an output like below.
+20. We get an output like below.
 
 ```text
 NAME                                READY   STATUS    RESTARTS   AGE   IP               NODE
@@ -149,7 +149,7 @@ In the output above, for each Pod the IPs are internal and specific to each inst
 
 We now check we can ping a Pod inside the cluster.
 
-- Create a `forping.yaml` file to create a Pod that pings a Pod inside the cluster.
+21. Create a `forping.yaml` file to create a Pod that pings a Pod inside the cluster.
 
 ```yaml
 apiVersion: v1
@@ -172,43 +172,43 @@ kubectl exec -it forping -- sh
 / # ping 172.16.166.180
 ```
 
-- Show the Pods detailed information and learn their IP addresses again.
+22. Show the Pods detailed information and learn their IP addresses again.
 
 ```bash
 kubectl get pods -o wide
 ```
 
-- Scale the deployment down to zero.
+23. Scale the deployment down to zero.
 
 ```bash
 kubectl scale deploy web-flask-deploy --replicas=0
 ```
 
-- List the pods again and note that there is no pod in web-flask-deploy.
+24. List the pods again and note that there is no pod in web-flask-deploy.
 
 ```bash
 kubectl get pods -o wide
 ```
 
-- Scale the deployment up to three replicas.
+25. Scale the deployment up to three replicas.
 
 ```bash
 kubectl scale deploy web-flask-deploy --replicas=3
 ```
 
-- List the pods again and note that the pods are changed.
+26. List the pods again and note that the pods are changed.
 
 ```bash
 kubectl get pods -o wide
 ```
 
-- Get the documentation of `Services` and its fields.
+27. Get the documentation of `Services` and its fields.
 
 ```bash
 kubectl explain svc
 ```
 
-- Create a `web-svc.yaml` file with following content and explain fields of it.
+28. Create a `web-svc.yaml` file with following content and explain fields of it.
 
 ```yaml
 apiVersion: v1
@@ -230,7 +230,7 @@ spec:
 kubectl apply -f web-svc.yaml
 ```
 
-- List the services.
+29. List the services.
 
 ```bash
 kubectl get svc -o wide
@@ -243,7 +243,7 @@ web-flask-svc   ClusterIP   10.98.173.110   <none>        3000/TCP              
 kube-dns        ClusterIP   10.96.0.10      <none>        53/UDP,53/TCP,9153/TCP   4h39m   k8s-app=kube-dns
 ```
 
-- Display information about the `web-flask-svc` Service.
+30. Display information about the `web-flask-svc` Service.
 
 ```bash
 kubectl describe svc web-flask-svc
@@ -264,7 +264,7 @@ Session Affinity:  None
 Events:            <none>
 ```
 
-- Create a `clarus-db.yaml` file to create a Pod that connects the web-flask page via curl command.
+31. Create a `clarus-db.yaml` file to create a Pod that connects the web-flask page via curl command.
 
 ```yaml
 apiVersion: v1
@@ -279,7 +279,7 @@ spec:
   restartPolicy: Always
 ```
 
-- Create the `clarus-db` pod and log into the container. Connects the web-flask page via curl command and pay attention to load balancig.
+32. Create the `clarus-db` pod and log into the container. Connects the web-flask page via curl command and pay attention to load balancig.
 
 ```bash
 kubectl apply -f clarus-db.yaml
@@ -287,18 +287,18 @@ kubectl exec -it clarus-db -- sh
 / # curl <cluster ip of service>:3000   # in our case, cluster ip=10.98.173.110
 ```
 
-- To connect web-flask page, we can use service name, in our case it is `web-flask-svc`, instead of cluster ip.
+33. To connect web-flask page, we can use service name, in our case it is `web-flask-svc`, instead of cluster ip.
 
 ```bash
 kubectl exec -it clarus-db -- sh
 / # curl web-flask-svc:3000
 ```
 
-- As we see kubernetes services provide DNS resolution.
+34. As we see kubernetes services provide DNS resolution.
 
 ### NodePort
 
-- Change the service type of web-flask-svc service to NodePort to use the Node IP and a static port to expose the service outside the cluster. So we get the yaml file below.
+35. Change the service type of web-flask-svc service to NodePort to use the Node IP and a static port to expose the service outside the cluster. So we get the yaml file below.
 
 ```yaml
 apiVersion: v1
@@ -316,22 +316,22 @@ spec:
     app: web-flask 
 ```
 
-- Configure the web-flask-svc service via apply command.
+36. Configure the web-flask-svc service via apply command.
 
 ```bash
 kubectl apply -f web-svc.yaml
 ```
 
-- List the services again. Note that kubernetes exposes the service in a random port within the range 30000-32767 using the Node’s primary IP address.
+37. List the services again. Note that kubernetes exposes the service in a random port within the range 30000-32767 using the Node’s primary IP address.
 
 ```bash
 kubectl get svc -o wide
 ```
 
-- We can visit `http://<public-node-ip>:<node-port>` and access the application. Pay attention to load balancing. 
+38. We can visit `http://<public-node-ip>:<node-port>` and access the application. Pay attention to load balancing. 
 Note: Do not forget to open the Port `<node-port>` in the security group of your node instance.
 
-- We can also define NodePort via adding nodePort number to service yaml file. Check the below. 
+39. We can also define NodePort via adding nodePort number to service yaml file. Check the below. 
 
 ```yaml
 apiVersion: v1
@@ -350,19 +350,19 @@ spec:
     app: web-flask 
 ```
 
-- Configure the web-flask-svc service  again via apply command.
+40. Configure the web-flask-svc service  again via apply command.
 
 ```bash
 kubectl apply -f web-svc.yaml
 ```
 
-- List the services and notice that nodeport numer is 30036.
+41. List the services and notice that nodeport numer is 30036.
 
 ```bash
 kubectl get svc -o wide
 ```
 
-- We can visit `http://<public-node-ip>:30036` and access the application. 
+42. We can visit `http://<public-node-ip>:30036` and access the application. 
 
 ### Endpoints
 
@@ -372,25 +372,25 @@ Each Service that is created automatically gets an associated Endpoint object. T
 
 Kubernetes is constantly evaluating the Service’s label selector against the current list of Pods in the cluster. Any new Pods that match the selector get added to the Endpoint object, and any Pods that disappear get removed. This ensures the Service is kept up-to-date as Pods come and go.
 
-- Get the documentation of `Endpoints` and its fields.
+43. Get the documentation of `Endpoints` and its fields.
 
 ```bash
 kubectl explain ep
 ```
 
-- List the Endpoints.
+44. List the Endpoints.
 
 ```bash
 kubectl get ep -o wide
 ```
 
-- Scale the deployment up to ten replicas and list the `Endpoints`.
+45. Scale the deployment up to ten replicas and list the `Endpoints`.
 
 ```bash
 kubectl scale deploy web-flask-deploy --replicas=10
 ```
 
-- List the `Endpoints` and explain that the Service has an associated `Endpoint` object with an always-up-to-date list of Pods matching the label selector.
+46. List the `Endpoints` and explain that the Service has an associated `Endpoint` object with an always-up-to-date list of Pods matching the label selector.
 
 ```bash
 kubectl get ep -o wide 
@@ -402,9 +402,9 @@ kubectl get ep -o wide
 
 ### Labels and loose coupling
 
-- Pods and Services are loosely coupled via labels and label selectors. For a Service to match a set of Pods, and therefore provide stable networking and load-balance, it only needs to match some of the Pods labels. However, for a Pod to match a Service, the Pod must match all of the values in the Service’s label selector.
+47. Pods and Services are loosely coupled via labels and label selectors. For a Service to match a set of Pods, and therefore provide stable networking and load-balance, it only needs to match some of the Pods labels. However, for a Pod to match a Service, the Pod must match all of the values in the Service’s label selector.
 
-- Add `version: v1` to `web-svc.yaml --> spec.selector`. So that you end up with:
+48. Add `version: v1` to `web-svc.yaml --> spec.selector`. So that you end up with:
 
 ```yaml
 apiVersion: v1
@@ -424,15 +424,15 @@ spec:
     version: v1
 ```
 
-- Use kubectl apply to push your configuration changes to the cluster.
+49. Use kubectl apply to push your configuration changes to the cluster.
 
 ```bash
 kubectl apply -f web-svc.yaml
 ```
 
-- Reload the page, and see that we can not see the page because of that the Service is selecting on two labels, but the Pods only have one of them. The logic behind this is a Boolean `AND` operation.
+50. Reload the page, and see that we can not see the page because of that the Service is selecting on two labels, but the Pods only have one of them. The logic behind this is a Boolean `AND` operation.
 
-- Add `version: v1` to `web-flask.yaml --> spec.template.metadata.labels`. So that you end up with:
+51. Add `version: v1` to `web-flask.yaml --> spec.template.metadata.labels`. So that you end up with:
 
 ```yaml
 apiVersion: apps/v1
@@ -463,15 +463,15 @@ spec:
         - containerPort: 5000
 ```
 
-- Use kubectl apply to push your configuration changes to the cluster.
+52. Use kubectl apply to push your configuration changes to the cluster.
 
 ```bash
 kubectl apply -f web-flask.yaml
 ```
 
-- Reload the page again, and now we can see the page because the `Service` is selecting on two labels and the Pods have all of them.
+53. Reload the page again, and now we can see the page because the `Service` is selecting on two labels and the Pods have all of them.
 
-- Add `test: coupling` to `web-flask.yaml --> spec.template.metadata.labels`. So that you end up with:
+54. Add `test: coupling` to `web-flask.yaml --> spec.template.metadata.labels`. So that you end up with:
 
 ```yaml
 apiVersion: apps/v1
@@ -503,39 +503,39 @@ spec:
         - containerPort: 5000
 ```
 
-- Push your configuration changes to the cluster.
+55. Push your configuration changes to the cluster.
 
 ```bash
 kubectl apply -f web-flask.yaml
 ```
 
-- Reload the page again, and we see the page although the `Pods` have additional labels that the `Service` is not selecting on.
+56. Reload the page again, and we see the page although the `Pods` have additional labels that the `Service` is not selecting on.
 
 ### To connect a service from different namespace
 
-- Kubernetes has an add-on for DNS, which creates a DNS record for each Service and its format is:
+57. Kubernetes has an add-on for DNS, which creates a DNS record for each Service and its format is:
 
 `web-svc.my-namespace.svc.cluster.local`
 
-- Services within the same Namespace find other Services just by their names. 
+58. Services within the same Namespace find other Services just by their names. 
 
-- If we add a Service `redis-master` in `my-ns` Namespace, all Pods in the same `my-ns` Namespace lookup the Service just by its name, `redis-master`.
+59. If we add a Service `redis-master` in `my-ns` Namespace, all Pods in the same `my-ns` Namespace lookup the Service just by its name, `redis-master`.
 
-- Pods from other Namespaces, such as `test-ns`, lookup the same Service by adding the respective Namespace as a suffix, such as `redis-master.my-ns` or providing the `FQDN` of the service as `redis-master.my-ns.svc.cluster.local`.
+60. Pods from other Namespaces, such as `test-ns`, lookup the same Service by adding the respective Namespace as a suffix, such as `redis-master.my-ns` or providing the `FQDN` of the service as `redis-master.my-ns.svc.cluster.local`.
 
-- Let's understand this issue with an example. Create a namespace and name it `my-ns`.
+61. Let's understand this issue with an example. Create a namespace and name it `my-ns`.
 
 ```bash
 kubectl create namespace my-ns
 ```
 
-- Create a pod inside the `my-ns` namespace.
+62. Create a pod inside the `my-ns` namespace.
 
 ```bash
 kubectl run forping --image=clarusway/forping -n my-ns
 ```
 
-- log into the container and ping the `web-flask-svc` inside `default` namespace.
+63. log into the container and ping the `web-flask-svc` inside `default` namespace.
 
 ```bash
 kubectl -n my-ns exec -it forping -- sh
@@ -546,7 +546,7 @@ or we can use `FQDN`.
 / #  ping web-flask-svc.default.svc.cluster.local
 ```
 
-- Delete all objects.
+64. Delete all objects.
 
 ```bash
 kubectl delete -f .
