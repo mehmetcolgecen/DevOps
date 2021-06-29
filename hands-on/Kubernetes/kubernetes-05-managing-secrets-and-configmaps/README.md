@@ -22,12 +22,12 @@ At the end of the this hands-on training, students will be able to;
 
 ## Part 1 - Setting up the Kubernetes Cluster
 
-- Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](../kubernetes-02-basic-operations/cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
+1. Launch a Kubernetes Cluster of Ubuntu 20.04 with two nodes (one master, one worker) using the [Cloudformation Template to Create Kubernetes Cluster](../kubernetes-02-basic-operations/cfn-template-to-create-k8s-cluster.yml). *Note: Once the master node up and running, worker node automatically joins the cluster.*
 
 >*Note: If you have problem with kubernetes cluster, you can use this link for lesson.*
 >https://www.katacoda.com/courses/kubernetes/playground
 
-- Check if Kubernetes is running and nodes are ready.
+2. Check if Kubernetes is running and nodes are ready.
 
 ```bash
 kubectl cluster-info
@@ -40,7 +40,7 @@ kubectl get no
 
 ### Creating a Secret Using kubectl
 
-- Secrets can contain user credentials required by Pods to access a database. For example, a database connection string consists of a username and password. You can store the username in a file ./username.txt and the password in a file ./password.txt on your local machine.
+3. Secrets can contain user credentials required by Pods to access a database. For example, a database connection string consists of a username and password. You can store the username in a file ./username.txt and the password in a file ./password.txt on your local machine.
 
 ```bash
 # Create files needed for the rest of the example.
@@ -48,19 +48,19 @@ echo -n 'admin' > ./username.txt
 echo -n '1f2d1e2e67df' > ./password.txt
 ```
 
-- The kubectl create secret command packages these files into a Secret and creates the object on the API server. The name of a Secret object must be a valid DNS subdomain name.
+4. The kubectl create secret command packages these files into a Secret and creates the object on the API server. The name of a Secret object must be a valid DNS subdomain name.
 
 ```bash
 $ kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt
 ```
 
-- The output is similar to:
+5. The output is similar to:
 
 ```bash
 secret "db-user-pass" created
 ```
 
-- Default key name is the filename. You may optionally set the key name using `[--from-file=[key=]source]`.
+6. Default key name is the filename. You may optionally set the key name using `[--from-file=[key=]source]`.
 
 ```bash
 $ kubectl create secret generic db-user-pass-key --from-file=username=./username.txt --from-file=password=./password.txt
@@ -74,13 +74,13 @@ $ kubectl create secret generic db-user-pass-key --from-file=username=./username
 >```
 >You do not need to escape special characters in passwords from files (--from-file).
 
-- You can check that the secret was created:
+7. You can check that the secret was created:
 
 ```bash
 $ kubectl get secrets
 ```
 
-- The output is similar to:
+8. The output is similar to:
 
 ```bash
 NAME                  TYPE                                  DATA      AGE
@@ -112,15 +112,15 @@ username.txt:    5 bytes
 
 ### Creating a Secret manually 
 
-- You can also create a Secret in a file first, in JSON or YAML format, and then create that object. The name of a Secret object must be a valid DNS subdomain name. The Secret contains two maps: data and stringData. The data field is used to store arbitrary data, encoded using base64. The stringData field is provided for convenience, and allows you to provide secret data as unencoded strings.
+9. You can also create a Secret in a file first, in JSON or YAML format, and then create that object. The name of a Secret object must be a valid DNS subdomain name. The Secret contains two maps: data and stringData. The data field is used to store arbitrary data, encoded using base64. The stringData field is provided for convenience, and allows you to provide secret data as unencoded strings.
 
-- For example, to store two strings in a Secret using the data field, convert the strings to base64 as follows:
+10. For example, to store two strings in a Secret using the data field, convert the strings to base64 as follows:
 
 ```bash
 $ echo -n 'admin' | base64
 ```
 
-- The output is similar to:
+11. The output is similar to:
 
 ```bash
 YWRtaW4=
@@ -130,13 +130,13 @@ YWRtaW4=
 $ echo -n '1f2d1e2e67df' | base64
 ```
 
-- The output is similar to:
+12. The output is similar to:
 
 ```bash
 MWYyZDFlMmU2N2Rm
 ```
 
-- Write a Secret that looks like this named secret.yaml:
+13. Write a Secret that looks like this named secret.yaml:
 
 ```yaml
 apiVersion: v1
@@ -149,13 +149,13 @@ data:
   password: MWYyZDFlMmU2N2Rm
 ```
 
-- Now create the Secret using `kubectl apply`:
+14. Now create the Secret using `kubectl apply`:
 
 ```bash
 $ kubectl apply -f ./secret.yaml
 ```
 
-- The output is similar to:
+15. The output is similar to:
 
 ```bash
 secret "mysecret" created
@@ -163,13 +163,13 @@ secret "mysecret" created
 
 ### Decoding a Secret
 
-- Secrets can be retrieved by running kubectl get secret. For example, you can view the Secret created in the previous section by running the following command:
+16. Secrets can be retrieved by running kubectl get secret. For example, you can view the Secret created in the previous section by running the following command:
 
 ```bash
 kubectl get secret mysecret -o yaml
 ```
 
-- The output is similar to:
+17. The output is similar to:
 
 ```yaml
 apiVersion: v1
@@ -206,13 +206,13 @@ metadata:
 type: Opaque
 ```
 
-- Decode the password field:
+18. Decode the password field:
 
 ```bash
 $ echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
 ```
 
-- The output is similar to:
+19. The output is similar to:
 
 ```bash
 1f2d1e2e67df
@@ -220,7 +220,7 @@ $ echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
 
 ### Using Secrets 
 
-- This is an example of a Pod that uses secrets from environment variables:
+20. This is an example of a Pod that uses secrets from environment variables:
 
 - mysecret-pod.yaml
 
@@ -247,7 +247,7 @@ spec:
   restartPolicy: Never
 ```
 
-- Create the pod.
+21. Create the pod.
 
 ```bash
 $ kubectl apply -f mysecret-pod.yaml
@@ -255,9 +255,9 @@ $ kubectl apply -f mysecret-pod.yaml
 
 ### Consuming Secret Values from environment variables
 
-- Inside a container that consumes a secret in an environment variables, the secret keys appear as normal environment variables containing the base64 decoded values of the secret data. This is the result of commands executed inside the container from the example above:
+22. Inside a container that consumes a secret in an environment variables, the secret keys appear as normal environment variables containing the base64 decoded values of the secret data. This is the result of commands executed inside the container from the example above:
 
-- Enter into pod and type following command.
+23. Enter into pod and type following command.
 
 ```bash
 kubectl exec -it secret-env-pod -- bash
@@ -269,34 +269,34 @@ root@secret-env-pod:/data# echo $SECRET_PASSWORD
 
 ## Part 3 - ConfigMaps in Kubernetes
 
-- A ConfigMap is a dictionary of configuration settings. This dictionary consists of key-value pairs of strings. Kubernetes provides these values to your containers. Like with other dictionaries (maps, hashes, ...) the key lets you get and set the configuration value.
+24. A ConfigMap is a dictionary of configuration settings. This dictionary consists of key-value pairs of strings. Kubernetes provides these values to your containers. Like with other dictionaries (maps, hashes, ...) the key lets you get and set the configuration value.
 
-- A ConfigMap stores configuration settings for your code. Store connection strings, public credentials, hostnames, environment variables, container command line arguments and URLs in your ConfigMap.
+25. A ConfigMap stores configuration settings for your code. Store connection strings, public credentials, hostnames, environment variables, container command line arguments and URLs in your ConfigMap.
 
-- ConfigMaps bind configuration files, command-line arguments, environment variables, port numbers, and other configuration artifacts to your Pods' containers and system components at runtime.
+26. ConfigMaps bind configuration files, command-line arguments, environment variables, port numbers, and other configuration artifacts to your Pods' containers and system components at runtime.
 
-- ConfigMaps allow you to separate your configurations from your Pods and components. 
+27. ConfigMaps allow you to separate your configurations from your Pods and components. 
 
-- ConfigMap helps to makes configurations easier to change and manage, and prevents hardcoding configuration data to Pod specifications.
+28. ConfigMap helps to makes configurations easier to change and manage, and prevents hardcoding configuration data to Pod specifications.
 
-- ConfigMaps are useful for storing and sharing non-sensitive, unencrypted configuration information.
+29. ConfigMaps are useful for storing and sharing non-sensitive, unencrypted configuration information.
 
-- For the show case we will select a simple application that displays a message like this.
+30. For the show case we will select a simple application that displays a message like this.
 
 ```text
 Hello, Clarusway!
 ```
 
-- We will parametrized the "Hello" portion in some languages.
+31. We will parametrized the "Hello" portion in some languages.
 
 ```bash
 $ mkdir k8s
 $ cd k8s/
 ```
 
-- Create 2 files.
+32. Create 2 files.
 
-- deployment.yaml
+33. deployment.yaml
 
 ```yaml
 apiVersion: apps/v1
@@ -322,7 +322,7 @@ spec:
           - containerPort: 8888
 ```
 
-- service.yaml
+34. service.yaml
 
 ```yaml
 apiVersion: v1
@@ -341,7 +341,7 @@ spec:
     app: demo
 ```
 
-- See the files and go upper folder.
+35. See the files and go upper folder.
 
 ```bash
 $ ls
@@ -349,7 +349,7 @@ deployment.yaml  service.yaml
 $ cd .. 
 ```
 
-- Now apply `kubectl` to these files.
+36. Now apply `kubectl` to these files.
 
 ```bash
 $ kubectl apply -f k8s
@@ -377,7 +377,7 @@ deployment.apps "demo" deleted
 service "demo-service" deleted
 ```
 
-- We have modified the application to take the greeting message as a parameter (environmental variable). So we will expose configuration data into the container’s environmental variables. Firstly, let's see how to pass environment variables to pods. 
+37. We have modified the application to take the greeting message as a parameter (environmental variable). So we will expose configuration data into the container’s environmental variables. Firstly, let's see how to pass environment variables to pods. 
 
 The modified `deployment.yaml` file.
 
@@ -410,7 +410,7 @@ spec:
               value: selam 
 ```
 
-Apply `kubectl` to these files.
+38. Apply `kubectl` to these files.
 
 ```bash
 $ kubectl apply -f deployment.yaml  
@@ -419,7 +419,7 @@ $ kubectl apply -f  service.yaml
 service/demo-service created
 ```
 
-- This time we will expose configuration data into the container’s environmental variables. And,  we will create `ConfigMap` and use the `greeting` key-value pair as in the `deployment.yaml` file.
+39. This time we will expose configuration data into the container’s environmental variables. And,  we will create `ConfigMap` and use the `greeting` key-value pair as in the `deployment.yaml` file.
 
 The modified `deployment.yaml` file.
 
@@ -468,13 +468,13 @@ There are three ways to create ConfigMaps using the `kubectl create configmap` c
 
 ### Literal key-value pairs
 
-We will start with the third option. We have just one parameter. Greet with "Halo" in Spanish.
+40. We will start with the third option. We have just one parameter. Greet with "Halo" in Spanish.
 
 ```bash
 $ kubectl create configmap demo-config --from-literal=greeting=Halo
 ```
 
-- Explain the important parts in `ConfigMap` file contents.
+41. Explain the important parts in `ConfigMap` file contents.
 
 ```bash
 $ kubectl get configmap/demo-config -o yaml
@@ -501,7 +501,7 @@ metadata:
   uid: c3d25ee8-666d-441a-a5fb-3678bf0395c7
 ```
 
-- Apply `kubectl` to these files.
+42. Apply `kubectl` to these files.
 
 ```bash
 $ kubectl apply -f deployment.yaml  
@@ -510,7 +510,7 @@ $ kubectl apply -f  service.yaml
 service/demo-service created
 ```
 
-- List the services.
+43. List the services.
 
 ```bash
 $ kubectl get svc -o wide
@@ -519,14 +519,14 @@ demo-service   LoadBalancer   10.97.162.15   <pending>     80:30001/TCP   15s   
 kubernetes     ClusterIP      10.96.0.1      <none>        443/TCP        46d   <none>
 ```
 
-- See the message.
+44. See the message.
 
 ```bash
 $ curl < worker-ip >:30001
 Halo, Clarusway!
 ```
 
-- Reset what we have created.
+45. Reset what we have created.
 
 ```bash
 $ kubectl get cm
@@ -542,7 +542,7 @@ deployment.apps "demo" deleted
 
 ### From a config file
 
-- We will write the greeting key-value pair in a file in Norvegian and create the ConfigMap from this file.
+46. We will write the greeting key-value pair in a file in Norvegian and create the ConfigMap from this file.
 
 ```bash
 echo "greeting: Hei" > config
@@ -550,7 +550,7 @@ echo "greeting: Hei" > config
 
 Note that, the comman notation used in key-value pairs is to use `key= value` notation, but this is not an obligatory. The notation actualy depends on the applicaton implementation that will parse and use these files.
 
-- Look at the other example files that look like below
+47. Look at the other example files that look like below
 
 ```bash
 $ ls 
@@ -573,14 +573,14 @@ allow.textmode=true
 how.nice.to.look=fairlyNice
 ```
 
-- Let's create our configmap from `config` file.
+48. Let's create our configmap from `config` file.
 
 ```bash
 $ kubectl create configmap demo-config --from-file=./config
 configmap/demo-config created
 ```
 
-- Check the content of the `configmap/demo-config`.
+49. Check the content of the `configmap/demo-config`.
 
 ```bash
 $ kubectl get  configmap/demo-config -o json
@@ -616,7 +616,7 @@ $ kubectl get  configmap/demo-config -o json
 }
 ```
 
-We have modifed our application to read parameters from the file. So the `deployment` file changed as follows:
+50. We have modifed our application to read parameters from the file. So the `deployment` file changed as follows:
 
 ```bash
 $ cat deployment.yaml 
@@ -652,9 +652,9 @@ spec:
             path: demo.yaml
 ```
 
-- Volume and volume mounting are comman ways to place config files inside a container. We are selecting `config` key from `demo-config` ConfigMap and put it inside the container at path `/config/` with the name `demo.yaml`.
+51. Volume and volume mounting are comman ways to place config files inside a container. We are selecting `config` key from `demo-config` ConfigMap and put it inside the container at path `/config/` with the name `demo.yaml`.
 
-- Apply and run all the configurations as follow:
+52. Apply and run all the configurations as follow:
 
 ```bash
 $ kubectl apply -f deployment.yaml 
@@ -672,7 +672,7 @@ $ curl < worker-ip >:32337
 Hei, Clarusway!
 ```
 
-- Reset what we have created.
+53. Reset what we have created.
 
 ```bash
 $ kubectl get cm
@@ -688,7 +688,7 @@ deployment.apps "demo" deleted
 
 ## From a ConfigMap YAML file
 
-- This has the same steps and configuration with the `From a config file`
+54. This has the same steps and configuration with the `From a config file`
 
 The ConfigMap YAML file
 
@@ -703,7 +703,7 @@ data:
     greeting: Buongiorno
 ```
 
-- Note the greeting message is changed.
+55. Note the greeting message is changed.
 
 ```bash
 $ cat deployment.yaml
@@ -739,7 +739,7 @@ spec:
             path: demo.yaml
 ```
 
-- `Service` is the same.
+56. `Service` is the same.
 
 ```bash
 $ kubectl apply -f configmap.yaml
@@ -759,7 +759,7 @@ $ curl < worker-ip >:30001
 Buongiorno, Clarusway!
 ```
 
-- Reset what we have created.
+57. Reset what we have created.
 ```bash
 $ kubectl delete cm demo-config 
 configmap "demo-config" deleted
@@ -771,7 +771,7 @@ deployment.apps "demo" deleted
 
 ## Configure all key-value pairs in a ConfigMap as container environment variables
 
-- We will update the `configmap.yaml` as follows:
+58. We will update the `configmap.yaml` as follows:
 
 ```yaml
 apiVersion: v1
@@ -782,7 +782,7 @@ data:
   greeting: Hola
 ```
 
-- We will update the `deployment.yaml` as follows:
+59. We will update the `deployment.yaml` as follows:
 
 ```yaml
 apiVersion: apps/v1
@@ -829,7 +829,7 @@ $ curl < worker-ip >:31577
 Hola, Clarusway!
 ```
 
-- Reset what we have created.
+60. Reset what we have created.
 
 ```bash
 $ kubectl delete -f k8s
@@ -840,7 +840,7 @@ service "demo-service" deleted
 
 ## Configure all key-value pairs in a ConfigMap as container environment variables in POSIX format
 
-- In case if you are using envFrom  instead of env  to create environmental variables in the container, the environmental names will be created from the ConfigMap's keys. If a ConfigMap  key has invalid environment variable name, it will be skipped but the pod will be allowed to start. 
+61. In case if you are using envFrom  instead of env  to create environmental variables in the container, the environmental names will be created from the ConfigMap's keys. If a ConfigMap  key has invalid environment variable name, it will be skipped but the pod will be allowed to start. 
 
 - POSIX variables consist solely of uppercase letters, digits, and the '_' (underscore) from the characters defined in Portable Character Set and do not begin with a digit.
 
@@ -857,7 +857,7 @@ data:
 
 The environmental variables are directly filled in `configmap.yaml`. They are in capital letters.
 
-- `deployment.yaml` file:
+62. `deployment.yaml` file:
 
 ```yaml
 apiVersion: apps/v1
@@ -893,7 +893,7 @@ Note the change as follows:
               name: demo-config
 ```
 
-- You can compare with the previos `deployment.yaml` file.
+63. You can compare with the previos `deployment.yaml` file.
 
 ```bash
 $ kubectl apply -f k8s
