@@ -40,4 +40,5 @@ The clarusway-workshop repository contains materials related to the IT trainings
 
     - 2020-06-30-victor-using-package-manager
     
-    - 2020-07-19-mehmet-asg-2
+    - 2020-07-19-osvaldo-asg-2
+
