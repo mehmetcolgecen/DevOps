@@ -192,8 +192,9 @@ spec:
             limits:
               cpu: 100m
             requests:
-              cpu: 80m			  
+              cpu: 80m
 ```
+
 - Note that this web app is connnected to MongoDB host/service via the `DBHOST` environment variable. What does `db-service:27017` mean here. How is the IP resolution handled?
 
 - When should we use `imagePullPolicy: Always`. Explain the `image` pull policy shortly.
