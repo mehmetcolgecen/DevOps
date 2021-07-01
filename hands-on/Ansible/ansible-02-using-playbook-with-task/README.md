@@ -17,10 +17,11 @@ At the end of the this hands-on training, students will be able to;
 ## Part 1 - Install Ansible
 
 
-- Create 2 Amazon Linux 2 and 1 Ubuntu EC2 instances. Then name the instances as below. For Security Group, allow ssh and http when creating EC2.
+- Create 3 Amazon Linux 2 and 1 Ubuntu EC2 instances. Then name the instances as below. For Security Group, allow ssh and http when creating EC2.
 1-control-node
 2-node1
-3-node2(ubuntu)
+3-node2
+4-node3 (ubuntu)
 
 - Connect to the control node with SSH and run the following commands.
 
@@ -49,7 +50,7 @@ node1 ansible_host=<node1_ip> ansible_user=ec2-user
 node2 ansible_host=<node1_ip> ansible_user=ec2-user
 
 [ubuntuservers]
-node2 ansible_host=<node2_ip> ansible_user=ubuntu
+node3 ansible_host=<node2_ip> ansible_user=ubuntu
 
 [all:vars]
 ansible_ssh_private_key_file=/home/ec2-user/<pem file>
