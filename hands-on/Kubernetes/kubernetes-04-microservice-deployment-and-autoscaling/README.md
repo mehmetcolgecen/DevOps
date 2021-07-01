@@ -286,7 +286,7 @@ mkdir php-apache
 cd php-apache
 ```
 
-- Create a php-apache.yaml file for second application.
+- Create a `php-apache.yaml` file for second application.
 
 ```yaml
 apiVersion: apps/v1
@@ -381,9 +381,9 @@ To understand better where autoscaling would provide the most value, let’s sta
 
 ### Run & expose php-apache server  
 
-To demonstrate Horizontal Pod Autoscaler we will use a custom docker image based on the php-apache image. The Dockerfile has the following content:
+- To demonstrate Horizontal Pod Autoscaler we will use a custom docker image based on the php-apache image. The Dockerfile has the following content:
 
-```text
+```Dockerfile
 FROM php:5-apache
 COPY index.php /var/www/html/index.php
 RUN chmod a+rx index.php
@@ -400,9 +400,10 @@ It defines an `index.php` page which performs some CPU intensive computations:
 ?> 
 ```
 
-First, let's check the php-apache `Services` and `Pods` to see if they are still running.
+- First, let's check the php-apache `Services` and `Pods` to see if they are still running.
 
-Observe pods and services:
+- Observe pods and services:
+
 ```bash
 $ kubectl get po
 NAME                              READY   STATUS    RESTARTS   AGE
@@ -419,7 +420,7 @@ php-apache-service   NodePort    10.101.242.84   <none>        80:32748/TCP     
 web-service          NodePort    10.107.136.54   <none>        3000:30634/TCP   96m
 ```
 
-Add `watch` board to verify the latest status of Cluster by below Commands.(This is Optional as not impacting the Functionality of Cluster). Observe in a separate terminal.
+- Add `watch` board to verify the latest status of Cluster by below Commands.(This is Optional as not impacting the Functionality of Cluster). Observe in a separate terminal.
 
 ```bash
 $ kubectl get service,hpa,pod -o wide
@@ -428,7 +429,7 @@ $ watch -n1 !!
 
 ### Create Horizontal Pod Autoscaler   
 
-Now that the server is running, we will create the autoscaler using kubectl autoscale. The following command will create a Horizontal Pod Autoscaler that maintains between 2 and 10 replicas of the Pods controlled by the php-apache deployment we created in the first step of these instructions. Roughly speaking, HPA will increase and decrease the number of replicas (via the deployment) to maintain an average CPU utilization across all Pods of 50% (since each pod requests 200 milli-cores by kubectl run), this means average CPU usage of 100 milli-cores). See [here]( https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details ) for more details on the algorithm.
+- Now that the server is running, we will create the autoscaler using kubectl autoscale. The following command will create a Horizontal Pod Autoscaler that maintains between 2 and 10 replicas of the Pods controlled by the php-apache deployment we created in the first step of these instructions. Roughly speaking, HPA will increase and decrease the number of replicas (via the deployment) to maintain an average CPU utilization across all Pods of 50% (since each pod requests 200 milli-cores by kubectl run), this means average CPU usage of 100 milli-cores). See [here]( https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details ) for more details on the algorithm.
 
 Now activate the  HPAs; 
 
@@ -437,10 +438,13 @@ Now activate the  HPAs;
 kubectl autoscale deployment php-apache --cpu-percent=50 --min=2 --max=10 
 kubectl autoscale deployment web-deployment --cpu-percent=50 --min=3 --max=5 
 ```
-or
+or we can use yaml files.
 
 ```bash
-$ cat hpa-php-apache.yaml
+$ pwd
+/home/ubuntu/microservices
+$ mkdir auto-scaling && cd auto-scaling
+$ cat << EOF > hpa-php-apache.yaml
 
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -453,16 +457,18 @@ spec:
     name: php-apache
   minReplicas: 2
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 50 
+  targetCPUUtilizationPercentage: 50
+
+EOF
 ```
 
 ```bash
-$ cat hpa-web.yaml
+$ cat << EOF > hpa-web.yaml
 
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: web
+  name: web-deployment
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -471,6 +477,8 @@ spec:
   minReplicas: 3
   maxReplicas: 5
   targetCPUUtilizationPercentage: 50 
+
+EOF
 ```
 
 ```bash
@@ -487,8 +495,8 @@ Every 3,0s: kubectl get service,hpa,pod -o wide                                 
 NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE     SELECTOR
 service/db-service           ClusterIP   10.105.0.75     <none>        27017/TCP        105m    name=mongo
 service/kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          2d10h   <none>
-service/php-apache-service   NodePort    10.101.242.84   <none>        80:32748/TCP     88m     run=php-apache
-service/web-service          NodePort    10.107.136.54   <none>        3000:30634/TCP   105m    name=web
+service/php-apache-service   NodePort    10.101.242.84   <none>        80:30002/TCP     88m     run=php-apache
+service/web-service          NodePort    10.107.136.54   <none>        3000:30001/TCP   105m    name=web
 
 NAME                                             REFERENCE                   TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
 horizontalpodautoscaler.autoscaling/php-apache   Deployment/php-apache       <unknown>/50%   2         10        2          81s
@@ -540,7 +548,7 @@ Conditions:
   ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 .....
 ```
-The `metrics` can't be calculated. So, the `metrics server` should be uploaded to the cluster.
+- The `metrics` can't be calculated. So, the `metrics server` should be uploaded to the cluster.
 
 ### Install Metric Server 
 
@@ -550,37 +558,31 @@ The `metrics` can't be calculated. So, the `metrics server` should be uploaded t
 $ kubectl delete -n kube-system deployments.apps metrics-server
 ```
 
-- Get the Metric Server form [GitHub](https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.3.7).
+- Get the Metric Server form [GitHub](https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.5.0).
 
 ```bash
-$ wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.7/components.yaml
+$ wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
 ```
 
+- Edit the file `components.yaml`. You will select the `Deployment` part in the file. Add the below line to `containers.args field under the deployment object`.
 
-- Edit the file `components.yaml`. Add the following arguments to the `metrics-server`. (We have already done for this lesson) 
+```yaml
+        - --kubelet-insecure-tls
+``` 
+(We have already done for this lesson)
 
-```text
-          - --kubelet-insecure-tls
-          - --kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP
-```
-
-You will select the `Deployment` part in the file.
-```text
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 ......
       containers:
-      - name: metrics-server
-        image: k8s.gcr.io/metrics-server/metrics-server:v0.3.7
-        imagePullPolicy: IfNotPresent
-        args:
-          - --cert-dir=/tmp
-          - --secure-port=4443
-          - --kubelet-insecure-tls
-          - --kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP	
-        ports:
-        - name: main-port
-          containerPort: 4443 
+      - args:
+        - --cert-dir=/tmp
+        - --secure-port=443
+        - --kubelet-insecure-tls
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
 ......	
 ```
 
@@ -589,15 +591,15 @@ kind: Deployment
 ```bash
 $ kubectl apply -f components.yaml
 ```
-Wait 1-2 minute or so.
+- Wait 1-2 minute or so.
 
-Verify the existace of `metrics-server` run by below command
+- Verify the existace of `metrics-server` run by below command
 
 ```bash
 $ kubectl -n kube-system get pods
 ```
 
-Verify `metrics-server` can access resources of the pods and nodes.
+- Verify `metrics-server` can access resources of the pods and nodes.
 
 ```bash
 $ kubectl top pods
@@ -625,17 +627,18 @@ web          Deployment/web-deployment   2%/50%    3         5         3        
 - Look at the the values under TARGETS. The values are changed from `<unknown>/50%` to `1%/50%` & `2%/50%`, means the HPA can now idendify the current use of CPU.
 
 ### Increase load
-Now, we will see how the autoscaler reacts to increased load. We will start a container, and send an infinite loop of queries to the php-apache service (please run it in a different terminal): 
 
-First look at the services.
+- Now, we will see how the autoscaler reacts to increased load. We will start a container, and send an infinite loop of queries to the php-apache service (please run it in a different terminal): 
+
+- First look at the services.
 
 ```bash
 $ kubectl get svc
 NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 db-service           ClusterIP      10.97.2.64      <none>        27017/TCP        23m
 kubernetes           ClusterIP      10.96.0.1       <none>        443/TCP          18d
-php-apache-service   LoadBalancer   10.102.71.34    <pending>     80:31138/TCP     18m
-web-service          NodePort       10.96.115.134   <none>        3000:32040/TCP   23m
+php-apache-service   LoadBalancer   10.102.71.34    <pending>     80:30002/TCP     18m
+web-service          NodePort       10.96.115.134   <none>        3000:30001/TCP   23m
 ```
 
 ```bash
@@ -680,7 +683,8 @@ pod/web-deployment-6d8d8c777b-q9c4t   1/1     Running       0          34m     1
 pod/web-deployment-6d8d8c777b-tgkzc   1/1     Running       0          46m     172.16.166.159   node1   <none>           <none>
 ```
 
-Now, let's introduce load for to-do web app with load-generator pod as follows (in a couple of terminals):
+- Now, let's introduce load for to-do web app with load-generator pod as follows (in a couple of terminals):
+
 ```bash
 $ kubectl exec -it load-generator -- /bin/sh
 / # while true; do wget -q -O- http://<puplic ip>:<port number of web-service> > /dev/null; done
@@ -715,11 +719,12 @@ pod/web-deployment-6d8d8c777b-tgkzc   1/1     Running   0          48m     172.1
 ```
 
 ### Stop load
-We will finish our example by stopping the user load.
 
-In the terminal where we created the container with busybox image, terminate the load generation by typing `Ctrl` + `C`. Close the load introducing terminals grafecully and observe the behaviour at the watch board.
+- We will finish our example by stopping the user load.
 
-Then we will verify the result state (after a minute or so):
+- In the terminal where we created the container with busybox image, terminate the load generation by typing `Ctrl` + `C`. Close the load introducing terminals grafecully and observe the behaviour at the watch board.
+
+- Then we will verify the result state (after a minute or so):
   
 ```bash
 $ kubectl get hpa 
