@@ -46,39 +46,13 @@ In this study, we will present an application that contains 2 unrelated sub-appl
   
 - Second one is used to demonstrate Horizontal Pod Autoscaler fuctionality based on the php-apache image.
 
-- Download the lesson folder from "https://github.com/clarusway/clarusway-aws-devops-4-20/tree/master/devops/hands-on/kubernetes/kubernetes-04-microservice-deployment-and-autoscaling".
+- Create a `microservices` directory and `to-do` directory in the microservices directory and change directory.
 
 ```bash
-$ mkdir microservices
-$ cd microservices/
-$ TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-$ FOLDER="https://$TOKEN@raw.githubusercontent.com/clarusway/clarusway-aws-devops-4-20/master/devops/hands-on/kubernetes/kubernetes-04-microservice-deployment-and-autoscaling//"
-$ curl -s --create-dirs -o "/home/ubuntu/microservices/microservices.tar.gz" -L "$FOLDER"microservices-yaml-files.tar.gz
-$ tar -xvf microservices.tar.gz
-```
-
-- Alternatively, you can copy from local host to a remote host's directory.
-
-```bash
-$ scp -i <your-pem-file> -r cohort-4-20/clarusway-aws-devops-4-20/devops/hands-on/kubernetes/kubernetes-04-microservice-deployment-and-autoscaling/microservices-yaml-files ubuntu@<master-ip>:/home/ubuntu/microservices
-```
-
-The directory structure is as follows:
-```text
-hands-on
-├── auto-scaling
-│   ├── components.yaml
-│   ├── hpa-php-apache.yaml
-│   └── hpa-web.yaml
-├── php-apache
-│   └── php-apache.yaml
-└── to-do
-    ├── db-deployment.yaml
-    ├── db-pv.yaml
-    ├── db-pvc.yaml
-    ├── db-service.yaml
-    ├── web-deployment.yaml
-    └── web-service.yaml
+mkdir microservices
+cd microservices
+mkdir to-do
+cd to-do
 ```
 
 ### Steps of execution:
@@ -87,24 +61,13 @@ hands-on
 2. And then deploy the `php-apache` app and highligts some important points.
 3. The Autoscaling in Kubernetes will be  demonstrated as a last step.
 
-Let's check the state of the cluster and see that evertyhing works fine.
-
-```bash
-kubectl cluster-info
-kubectl get no
-```
-
 ## Part 3 - Microservices
 
-Go to the `microservices-yaml-files/to-do` directory and look at the contents.
+- The MongoDB application will use a static volume provisioning with the help of persistent volume (PV) and persistent volume claim (PVC). 
 
-The MongoDB application will use a static volume provisioning with the help of persistent volume (PV) and persistent volume claim (PVC). <br>
+- Create a `db-pv.yaml` file.
 
-Check the contents of the `db-pv.yaml` file.
-
-```bash
-$ cat db-pv.yaml
-
+```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -121,11 +84,9 @@ spec:
     path: "/home/ubuntu/pv-data"
 ```
 
-Check the contents of the `db-pvc.yaml` file.
+- Create a `db-pvc.yaml` file.
 
-```bash
-$ cat db-pvc.yaml
-
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -137,16 +98,13 @@ spec:
   resources:
     requests:
       storage: 1Gi
-
 ```
 
-It will provision storage from `hostpath`.
+- It will provision storage from `hostpath`.
 
-Let's check the MongoDB deployment yaml file to see how the PVC is used. 
+- Let's create the MongoDB deployment yaml file (name it `db-deployment.yaml`) to see how the PVC is used. 
 
-```bash
-cat db-deployment.yaml
-
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -178,12 +136,12 @@ spec:
           persistentVolumeClaim:
             claimName: database-persistent-volume-claim
 ```
-The commented part directly uses the local hostpath for storage. Students can try it on their own later.
 
-Let's check the MongoDB `service`.
+- The commented part directly uses the local hostpath for storage. Students can try it on their own later.
 
-```bash
-$ cat db-service.yaml
+- Let's create the MongoDB `service` and name it `db-service.yaml`.
+
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -201,35 +159,11 @@ spec:
       targetPort: 27017
 ```
 
-Note that a database has no direct exposure the outside world, so it's type is `ClusterIP`.
+- Note that a database has no direct exposure the outside world, so it's type is `ClusterIP`.
 
-Now check the content of the front-end web application `service`.
+- Now, create the `web-deployment.yaml` for web application.
 
-```bash
-$ cat web-service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: web-service
-  labels:
-    name: web
-    app: todoapp
-spec:
-  selector:
-    name: web 
-  type: NodePort
-  ports:
-   - name: http
-     port: 3000
-     targetPort: 3000
-     protocol: TCP
-
-```
-What should be the type of the service? ClusterIP, NodePort or LoadBalancer?
-
-Check the web application `Deployment` file.
-```bash
-$ cat web-deployment.yaml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -258,15 +192,43 @@ spec:
             limits:
               cpu: 100m
             requests:
-              cpu: 80m			  
+              cpu: 80m
 ```
-Note that this web app is connnected to MongoDB host/service via the `DBHOST` environment variable. What does `db-service:27017` mean here. How is the IP resolution handled?
-When should we use `imagePullPolicy: Always`. Explain the `image` pull policy shortly. What does `replicas: 1` mean?
 
-Let's deploy the to-do application.
+- Note that this web app is connnected to MongoDB host/service via the `DBHOST` environment variable. What does `db-service:27017` mean here. How is the IP resolution handled?
+
+- When should we use `imagePullPolicy: Always`. Explain the `image` pull policy shortly.
+
+- This time, we create the `web-service.yaml` for front-end web application `service`.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+  labels:
+    name: web
+    app: todoapp
+spec:
+  selector:
+    name: web 
+  type: NodePort
+  ports:
+   - name: http
+     port: 3000
+     targetPort: 3000
+     nodePort: 30001
+     protocol: TCP
+
+```
+
+- What should be the type of the service? ClusterIP, NodePort or LoadBalancer?
+
+- Let's deploy the to-do application.
+
 ```bash
-$ cd ..
-$ kubectl apply -f to-do
+cd ..
+kubectl apply -f to-do
 deployment.apps/db-deployment created
 persistentvolume/db-pv-vol created
 persistentvolumeclaim/database-persistent-volume-claim created
@@ -302,20 +264,32 @@ $ kubectl get svc
 NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 db-service    ClusterIP   10.105.0.75     <none>        27017/TCP        4m39s
 kubernetes    ClusterIP   10.96.0.1       <none>        443/TCP          2d8h
-web-service   NodePort    10.107.136.54   <none>        3000:30634/TCP   4m38s
+web-service   NodePort    10.107.136.54   <none>        3000:30001/TCP   4m38s
 ```
-Note the `PORT(S)` difference between `db-service` and `web-service`. Why?
+
+- Note the `PORT(S)` difference between `db-service` and `web-service`. Why?
 
 - We can visit http://<public-node-ip>:<node-port> and access the application. Note: Do not forget to open the Port <node-port> in the security group of your node instance.
 
-We see the home page. You can add to-do's.
+- We see the home page. You can add to-do's.
 
+### Deploy the second aplication
 
-Now deploy the second aplication
+- Create a `php-apache` directory and change directory.
 
 ```bash
-$ cd php-apache/
-$ cat php-apache.yaml 
+$ pwd
+/home/ubuntu/microservices
+```
+
+```bash
+mkdir php-apache
+cd php-apache
+```
+
+- Create a `php-apache.yaml` file for second application.
+
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -350,6 +324,7 @@ metadata:
 spec:
   ports:
   - port: 80
+    nodePort: 30002
   selector:
     run: php-apache 
   type: NodePort	
@@ -358,8 +333,9 @@ spec:
 Note how the `Deployment` and `Service` `yaml` files are merged in one file. 
 
 Deploy this `php-apache` file.
+
 ```bash
-$ kubectl apply -f php-apache.yaml 
+$ kubectl apply -f . 
 deployment.apps/php-apache created
 service/php-apache-service created
 ```
@@ -379,11 +355,11 @@ $ kubectl get svc
 NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 db-service           ClusterIP   10.105.0.75     <none>        27017/TCP        17m
 kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          2d9h
-php-apache-service   NodePort    10.101.242.84   <none>        80:32748/TCP     35s
-web-service          NodePort    10.107.136.54   <none>        3000:30634/TCP   17m
+php-apache-service   NodePort    10.101.242.84   <none>        80:30002/TCP     35s
+web-service          NodePort    10.107.136.54   <none>        3000:30001/TCP   17m
 ```
 
-Let's check what web app presents us.
+- Let's check what web app presents us.
 
 - On opening browser (http://<public-node-ip>:<node-port>) we see
 
@@ -391,11 +367,13 @@ Let's check what web app presents us.
 OK!
 ```
 
-Alternatively, you can use;
+- Alternatively, you can use;
 ```text
 curl <public-worker node-ip>:<node-port>
 OK!
 ```
+
+- Do not forget to open the Port <node-port> in the security group of your node instance. 
 
 ## Part 4 - Autoscaling in Kubernetes
 
@@ -404,9 +382,9 @@ To understand better where autoscaling would provide the most value, let’s sta
 
 ### Run & expose php-apache server  
 
-To demonstrate Horizontal Pod Autoscaler we will use a custom docker image based on the php-apache image. The Dockerfile has the following content:
+- To demonstrate Horizontal Pod Autoscaler we will use a custom docker image based on the php-apache image. The Dockerfile has the following content:
 
-```text
+```Dockerfile
 FROM php:5-apache
 COPY index.php /var/www/html/index.php
 RUN chmod a+rx index.php
@@ -423,9 +401,10 @@ It defines an `index.php` page which performs some CPU intensive computations:
 ?> 
 ```
 
-First, let's check the php-apache `Services` and `Pods` to see if they are still running.
+- First, let's check the php-apache `Services` and `Pods` to see if they are still running.
 
-Observe pods and services:
+- Observe pods and services:
+
 ```bash
 $ kubectl get po
 NAME                              READY   STATUS    RESTARTS   AGE
@@ -442,7 +421,7 @@ php-apache-service   NodePort    10.101.242.84   <none>        80:32748/TCP     
 web-service          NodePort    10.107.136.54   <none>        3000:30634/TCP   96m
 ```
 
-Add `watch` board to verify the latest status of Cluster by below Commands.(This is Optional as not impacting the Functionality of Cluster). Observe in a separate terminal.
+- Add `watch` board to verify the latest status of Cluster by below Commands.(This is Optional as not impacting the Functionality of Cluster). Observe in a separate terminal.
 
 ```bash
 $ kubectl get service,hpa,pod -o wide
@@ -451,7 +430,7 @@ $ watch -n1 !!
 
 ### Create Horizontal Pod Autoscaler   
 
-Now that the server is running, we will create the autoscaler using kubectl autoscale. The following command will create a Horizontal Pod Autoscaler that maintains between 2 and 10 replicas of the Pods controlled by the php-apache deployment we created in the first step of these instructions. Roughly speaking, HPA will increase and decrease the number of replicas (via the deployment) to maintain an average CPU utilization across all Pods of 50% (since each pod requests 200 milli-cores by kubectl run), this means average CPU usage of 100 milli-cores). See [here]( https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details ) for more details on the algorithm.
+- Now that the server is running, we will create the autoscaler using kubectl autoscale. The following command will create a Horizontal Pod Autoscaler that maintains between 2 and 10 replicas of the Pods controlled by the php-apache deployment we created in the first step of these instructions. Roughly speaking, HPA will increase and decrease the number of replicas (via the deployment) to maintain an average CPU utilization across all Pods of 50% (since each pod requests 200 milli-cores by kubectl run), this means average CPU usage of 100 milli-cores). See [here]( https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details ) for more details on the algorithm.
 
 Now activate the  HPAs; 
 
@@ -460,10 +439,13 @@ Now activate the  HPAs;
 kubectl autoscale deployment php-apache --cpu-percent=50 --min=2 --max=10 
 kubectl autoscale deployment web-deployment --cpu-percent=50 --min=3 --max=5 
 ```
-or
+or we can use yaml files.
 
 ```bash
-$ cat hpa-php-apache.yaml
+$ pwd
+/home/ubuntu/microservices
+$ mkdir auto-scaling && cd auto-scaling
+$ cat << EOF > hpa-php-apache.yaml
 
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -476,16 +458,18 @@ spec:
     name: php-apache
   minReplicas: 2
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 50 
+  targetCPUUtilizationPercentage: 50
+
+EOF
 ```
 
 ```bash
-$ cat hpa-web.yaml
+$ cat << EOF > hpa-web.yaml
 
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: web
+  name: web-deployment
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -494,6 +478,8 @@ spec:
   minReplicas: 3
   maxReplicas: 5
   targetCPUUtilizationPercentage: 50 
+
+EOF
 ```
 
 ```bash
@@ -510,8 +496,8 @@ Every 3,0s: kubectl get service,hpa,pod -o wide                                 
 NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE     SELECTOR
 service/db-service           ClusterIP   10.105.0.75     <none>        27017/TCP        105m    name=mongo
 service/kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          2d10h   <none>
-service/php-apache-service   NodePort    10.101.242.84   <none>        80:32748/TCP     88m     run=php-apache
-service/web-service          NodePort    10.107.136.54   <none>        3000:30634/TCP   105m    name=web
+service/php-apache-service   NodePort    10.101.242.84   <none>        80:30002/TCP     88m     run=php-apache
+service/web-service          NodePort    10.107.136.54   <none>        3000:30001/TCP   105m    name=web
 
 NAME                                             REFERENCE                   TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
 horizontalpodautoscaler.autoscaling/php-apache   Deployment/php-apache       <unknown>/50%   2         10        2          81s
@@ -563,7 +549,7 @@ Conditions:
   ScalingActive  False   FailedGetResourceMetric  the HPA was unable to compute the replica count: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)
 .....
 ```
-The `metrics` can't be calculated. So, the `metrics server` should be uploaded to the cluster.
+- The `metrics` can't be calculated. So, the `metrics server` should be uploaded to the cluster.
 
 ### Install Metric Server 
 
@@ -573,37 +559,31 @@ The `metrics` can't be calculated. So, the `metrics server` should be uploaded t
 $ kubectl delete -n kube-system deployments.apps metrics-server
 ```
 
-- Get the Metric Server form [GitHub](https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.3.7).
+- Get the Metric Server form [GitHub](https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.5.0).
 
 ```bash
-$ wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.7/components.yaml
+$ wget https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
 ```
 
+- Edit the file `components.yaml`. You will select the `Deployment` part in the file. Add the below line to `containers.args field under the deployment object`.
 
-- Edit the file `components.yaml`. Add the following arguments to the `metrics-server`. (We have already done for this lesson) 
+```yaml
+        - --kubelet-insecure-tls
+``` 
+(We have already done for this lesson)
 
-```text
-          - --kubelet-insecure-tls
-          - --kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP
-```
-
-You will select the `Deployment` part in the file.
-```text
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 ......
       containers:
-      - name: metrics-server
-        image: k8s.gcr.io/metrics-server/metrics-server:v0.3.7
-        imagePullPolicy: IfNotPresent
-        args:
-          - --cert-dir=/tmp
-          - --secure-port=4443
-          - --kubelet-insecure-tls
-          - --kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP	
-        ports:
-        - name: main-port
-          containerPort: 4443 
+      - args:
+        - --cert-dir=/tmp
+        - --secure-port=443
+        - --kubelet-insecure-tls
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
 ......	
 ```
 
@@ -612,15 +592,15 @@ kind: Deployment
 ```bash
 $ kubectl apply -f components.yaml
 ```
-Wait 1-2 minute or so.
+- Wait 1-2 minute or so.
 
-Verify the existace of `metrics-server` run by below command
+- Verify the existace of `metrics-server` run by below command
 
 ```bash
 $ kubectl -n kube-system get pods
 ```
 
-Verify `metrics-server` can access resources of the pods and nodes.
+- Verify `metrics-server` can access resources of the pods and nodes.
 
 ```bash
 $ kubectl top pods
@@ -648,17 +628,18 @@ web          Deployment/web-deployment   2%/50%    3         5         3        
 - Look at the the values under TARGETS. The values are changed from `<unknown>/50%` to `1%/50%` & `2%/50%`, means the HPA can now idendify the current use of CPU.
 
 ### Increase load
-Now, we will see how the autoscaler reacts to increased load. We will start a container, and send an infinite loop of queries to the php-apache service (please run it in a different terminal): 
 
-First look at the services.
+- Now, we will see how the autoscaler reacts to increased load. We will start a container, and send an infinite loop of queries to the php-apache service (please run it in a different terminal): 
+
+- First look at the services.
 
 ```bash
 $ kubectl get svc
 NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 db-service           ClusterIP      10.97.2.64      <none>        27017/TCP        23m
 kubernetes           ClusterIP      10.96.0.1       <none>        443/TCP          18d
-php-apache-service   LoadBalancer   10.102.71.34    <pending>     80:31138/TCP     18m
-web-service          NodePort       10.96.115.134   <none>        3000:32040/TCP   23m
+php-apache-service   LoadBalancer   10.102.71.34    <pending>     80:30002/TCP     18m
+web-service          NodePort       10.96.115.134   <none>        3000:30001/TCP   23m
 ```
 
 ```bash
@@ -703,7 +684,8 @@ pod/web-deployment-6d8d8c777b-q9c4t   1/1     Running       0          34m     1
 pod/web-deployment-6d8d8c777b-tgkzc   1/1     Running       0          46m     172.16.166.159   node1   <none>           <none>
 ```
 
-Now, let's introduce load for to-do web app with load-generator pod as follows (in a couple of terminals):
+- Now, let's introduce load for to-do web app with load-generator pod as follows (in a couple of terminals):
+
 ```bash
 $ kubectl exec -it load-generator -- /bin/sh
 / # while true; do wget -q -O- http://<puplic ip>:<port number of web-service> > /dev/null; done
@@ -738,11 +720,12 @@ pod/web-deployment-6d8d8c777b-tgkzc   1/1     Running   0          48m     172.1
 ```
 
 ### Stop load
-We will finish our example by stopping the user load.
 
-In the terminal where we created the container with busybox image, terminate the load generation by typing `Ctrl` + `C`. Close the load introducing terminals grafecully and observe the behaviour at the watch board.
+- We will finish our example by stopping the user load.
 
-Then we will verify the result state (after a minute or so):
+- In the terminal where we created the container with busybox image, terminate the load generation by typing `Ctrl` + `C`. Close the load introducing terminals grafecully and observe the behaviour at the watch board.
+
+- Then we will verify the result state (after a minute or so):
   
 ```bash
 $ kubectl get hpa 

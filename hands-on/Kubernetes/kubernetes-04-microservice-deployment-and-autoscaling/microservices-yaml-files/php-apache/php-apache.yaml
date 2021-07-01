@@ -32,7 +32,7 @@ metadata:
 spec:
   ports:
   - port: 80
+    nodePort: 30002
   selector:
     run: php-apache 
-  # type: NodePort	
-  type: LoadBalancer
+  type: NodePort	
