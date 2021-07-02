@@ -190,11 +190,12 @@ spec:
               value: db-service
           resources:
             limits:
+              memory: 500Mi
               cpu: 100m
             requests:
-              cpu: 80m
+              memory: 250Mi
+              cpu: 80m		  
 ```
-
 - Note that this web app is connnected to MongoDB host/service via the `DBHOST` environment variable. What does `db-service:27017` mean here. How is the IP resolution handled?
 
 - When should we use `imagePullPolicy: Always`. Explain the `image` pull policy shortly.
@@ -311,8 +312,10 @@ spec:
         - containerPort: 80
         resources:
           limits:
+            memory: 500Mi
             cpu: 100m
           requests:
+            memory: 250Mi
             cpu: 80m
 ---
 apiVersion: v1

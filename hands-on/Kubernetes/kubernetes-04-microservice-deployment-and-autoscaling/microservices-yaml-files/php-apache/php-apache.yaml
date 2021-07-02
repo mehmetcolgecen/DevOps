@@ -19,8 +19,10 @@ spec:
         - containerPort: 80
         resources:
           limits:
+            memory: 500Mi
             cpu: 100m
           requests:
+            memory: 250Mi
             cpu: 80m
 ---
 apiVersion: v1
@@ -35,4 +37,4 @@ spec:
     nodePort: 30002
   selector:
     run: php-apache 
-  type: NodePort	
+  type: NodePort
