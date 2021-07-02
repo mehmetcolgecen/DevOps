@@ -309,45 +309,47 @@ apiVersion: v1
 metadata:
    name: my-namespace
    labels:
-      app: web-flask
+      app: container-info
 ---
 apiVersion: v1
 kind: Service
 metadata:
-   name: web-flask-svc
+   name: container-info-svc
    namespace: my-namespace
    labels:
-      app: web-flask
+      app: container-info
 spec:
    type: LoadBalancer
    ports:
       - protocol: TCP
         port: 3000
         nodePort: 30300
-        targetPort: 5000
+        targetPort: 80
    selector:
-      app: web-flask
+      app: container-info
 --- 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-   name: web-flask-deploy
+  name: container-info-deploy
+  namespace: my-namespace
+  labels:
+    app: container-info
 spec:
-   replicas: 3
-   selector:
-      matchLabels:
-         namespace: my-namespace
-         app: web-flask
-   template:
-      metadata:
-         labels:
-            app: web-flask
-      spec:
-         containers:
-            - name: web-flask-pod
-              image: clarusway/cw_web_flask1
-              ports:
-                 - containerPort: 5000  
+  replicas: 3
+  selector:
+    matchLabels:
+      app: container-info
+  template:
+    metadata:
+      labels:
+        app: container-info
+    spec:
+      containers:
+      - name: container-info
+        image: clarusway/container-info:1.0
+        ports:
+        - containerPort: 80
 ```
 
 3. Deploy the application with following command.
