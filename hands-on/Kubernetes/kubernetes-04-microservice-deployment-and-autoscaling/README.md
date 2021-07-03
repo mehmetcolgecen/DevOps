@@ -190,11 +190,12 @@ spec:
               value: db-service
           resources:
             limits:
+              memory: 500Mi
               cpu: 100m
             requests:
-              cpu: 80m
+              memory: 250Mi
+              cpu: 80m		  
 ```
-
 - Note that this web app is connnected to MongoDB host/service via the `DBHOST` environment variable. What does `db-service:27017` mean here. How is the IP resolution handled?
 
 - When should we use `imagePullPolicy: Always`. Explain the `image` pull policy shortly.
@@ -311,8 +312,10 @@ spec:
         - containerPort: 80
         resources:
           limits:
+            memory: 500Mi
             cpu: 100m
           requests:
+            memory: 250Mi
             cpu: 80m
 ---
 apiVersion: v1
@@ -381,25 +384,6 @@ OK!
 To understand better where autoscaling would provide the most value, let’s start with an example. Imagine you have a 24/7 production service with a load that is variable in time, where it is very busy during the day in the US, and relatively low at night. Ideally, we would want the number of nodes in the cluster and the number of pods in deployment to dynamically adjust to the load to meet end user demand. The new Cluster Autoscaling feature together with Horizontal Pod Autoscaler can handle this for you automatically.
 
 ### Run & expose php-apache server  
-
-- To demonstrate Horizontal Pod Autoscaler we will use a custom docker image based on the php-apache image. The Dockerfile has the following content:
-
-```Dockerfile
-FROM php:5-apache
-COPY index.php /var/www/html/index.php
-RUN chmod a+rx index.php
-```
-
-It defines an `index.php` page which performs some CPU intensive computations:  
-```text
-<?php
-  $x = 0.0001;
-  for ($i = 0; $i <= 1000000; $i++) {
-    $x += sqrt($x);
-  }
-  echo "OK!";
-?> 
-```
 
 - First, let's check the php-apache `Services` and `Pods` to see if they are still running.
 

@@ -24,6 +24,8 @@ spec:
               value: "mongodb://db-service:27017"
           resources:
             limits:
+              memory: 500Mi
               cpu: 100m
             requests:
+              memory: 250Mi
               cpu: 80m
