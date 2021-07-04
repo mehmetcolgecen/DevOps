@@ -9,3 +9,5 @@
 - [Kubernetes Takeaway-05 : Kubernetes Secrets and ConfigMaps](5.Secrets-and-ConfigMaps-cohort-07-21.pdf)
 
 - [Kubernetes Takeaway-06 : Kubernetes Microservices](6.kubernetes-microservices-cohort-07-21.pdf)
+
+- [Kubernetes Takeaway-07 : Managing Kubernetes Cluster with AWS EKS](7.Managing-Kubernetes-Cluster-with-AWS-EKS.pdf)
