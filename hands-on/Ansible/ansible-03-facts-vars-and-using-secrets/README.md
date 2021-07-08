@@ -163,7 +163,7 @@ $ ansible-playbook facts.yml
 - run the playbook
 
 ```bash
-ansible-playbook ipaddress.yml -i inventory.aws_ec2.yml 
+ansible-playbook ipaddress.yml 
 ```
 
 ## Part 3 - Working with sensitive data
