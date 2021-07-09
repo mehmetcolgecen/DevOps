@@ -38,3 +38,4 @@ volumes:
 configs:
     table:
         file: ./init.sql
+        
