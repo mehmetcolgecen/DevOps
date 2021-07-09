@@ -347,7 +347,7 @@ vi playbook8.yml
       loop:
         - john
         - aaron
-      when: ansible_os_family == "Debian" or ansible_os_family == "20.04"
+      when: ansible_os_family == "Debian" or ansible_distribution_version == "20.04"
 ```
 
 - Run the playbook8.yml
