@@ -100,7 +100,7 @@ kubectl describe pod etcd-kube20-master -n kube-system
 
 ### Data Directory
 
-- When first started, etcd stores its configuration into a data directory specified by the data-dir configuration parameter. Configuration is stored in the write-ahead log and includes the local member ID, cluster-ID, and initial cluster configuration. The write-ahead log and snapshot files are used to recover after a restart.
+- When first started, etcd stores its configuration into a data directory specified by the data-dir configuration parameter.
 
 - A user should avoid restarting an etcd member with a data directory from an out-of-date backup. Using an out-of-date data directory can lead to inconsistency.
 

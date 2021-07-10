@@ -12,9 +12,5 @@ spec:
         paths:
           - path: /?(.*)
             backend:
-              serviceName: web-service
-              servicePort: 3000
-          - path: /load/?(.*)
-            backend:
               serviceName: php-apache-service
               servicePort: 80
