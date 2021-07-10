@@ -2,6 +2,7 @@
 
 The purpose of this hands-on training is to give students the knowledge of automating cluster creation with terraform and ansible.
 
+
 ## Learning Outcomes
 
 At the end of this hands-on training, students will be able to;
@@ -9,6 +10,7 @@ At the end of this hands-on training, students will be able to;
 - Explain creation of the infrastructure needed for a Kubernetes Cluster.
 
 - Explain how to configure an infrastructure as a Kubernetes cluster with Ansible.
+
 
 ## Outline
 
@@ -19,6 +21,7 @@ At the end of this hands-on training, students will be able to;
 - Part 3 - Configure the infrastructure with Ansible
 
 - Part 4 - Deploy a Sample Applications
+
 
 ## Part 1 - Install Terraform, Ansible and Kubectl on AWS EC2
 
@@ -68,25 +71,6 @@ pip3 install --user ansible
 ansible --version
 ```
 
-- Patially clone this hands-on folder (kubernetes-10-automate-k8s-cluster-creation-with-terraform-and-ansible) into your Amazon Linux 2 Machine.
-
-```bash
-sudo yum install -y git
-mkdir <repo>
-cd <repo>
-git init
-git remote add origin <origin-url>
-git config core.sparseCheckout true
-echo "subdirectory/under/repo/" >> .git/info/sparse-checkout  # do not put the repository folder name in the beginning
-git pull origin <branch-name>
-```
-
-- Go into the cloned folder, find the folders named ```terraform```, ```ansible```, ```ingress-yaml-files``` and  move them under your home folder.
-
-```bash
-mv terraform ansible ingress-yaml-files ~/
-```
-
 - Download the Amazon EKS vended kubectl binary.
 
 ```bash
@@ -110,6 +94,26 @@ sudo mv ./kubectl /usr/local/bin
 ```bash
 kubectl version --short --client
 ```
+
+- Patially clone this hands-on folder (kubernetes-10-automate-k8s-cluster-creation-with-terraform-and-ansible) into your Amazon Linux 2 Machine.
+
+```bash
+sudo yum install -y git
+mkdir <repo>
+cd <repo>
+git init
+git remote add origin <origin-url>
+git config core.sparseCheckout true
+echo "subdirectory/under/repo/" >> .git/info/sparse-checkout  # do not put the repository folder name in the beginning
+git pull origin <branch-name>
+```
+
+- Go into the cloned folder, find the folders named ```terraform```, ```ansible```, ```ingress-yaml-files``` and  move them under your home folder.
+
+```bash
+mv terraform ansible ingress-yaml-files ~/
+```
+
 
 ## Part 2 - Create the infrastructure with Terraform
 
