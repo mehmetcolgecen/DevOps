@@ -249,7 +249,6 @@ kubectl get node
 ```bash
 kubectl apply -f ingress-service.yaml
 kubectl apply -f storage-class.yaml
-kubectl apply -f to-do
 kubectl apply -f php-apache
 ```
 
