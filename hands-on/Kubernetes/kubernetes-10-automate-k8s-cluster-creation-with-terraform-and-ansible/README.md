@@ -31,7 +31,7 @@ At the end of this hands-on training, students will be able to;
 - Update the installed packages and package cache on your instance.
 
 ```bash
-$ sudo yum update -y
+sudo yum update -y
 ```
 
 > - In Amazon Linux instance we have just two repository under the /etc/yum.repos.d directory and this repos doesn't have terraform packages. If we want to install terraform, we need to add terraform repo, to the directory of yum.repos.d.
@@ -39,7 +39,7 @@ $ sudo yum update -y
 - Use yum-config-manager to add the official HashiCorp Linux repository to the directory of /etc/yum.repos.d.
 
 ```bash
-$ sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 ```
 
 - Go to /etc/yum.repos.d/ folder and show that the file ```hashicorp.repo``` is added.
@@ -47,13 +47,13 @@ $ sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLi
 - Install Terraform.
 
 ```bash
-$ sudo yum -y install terraform
+sudo yum -y install terraform
 ```
 
 - Verify that the installation is succefful.
 
 ```bash
-$ terraform version
+terraform version
 ```
 
 - Run the following commands to install Ansible.
@@ -65,7 +65,7 @@ pip3 install --user ansible
 - To confirm the installation of Ansible, run the following command.
 
 ```bash
-$ ansible --version
+ansible --version
 ```
 
 - Patially clone this hands-on folder (kubernetes-10-automate-k8s-cluster-creation-with-terraform-and-ansible) into your Amazon Linux 2 Machine.
@@ -90,25 +90,25 @@ mv terraform ansible ingress-yaml-files ~/
 - Download the Amazon EKS vended kubectl binary.
 
 ```bash
-$ curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/kubectl
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/kubectl
 ```
 
 - Apply execute permissions to the binary.
 
 ```bash
-$ chmod +x ./kubectl
+chmod +x ./kubectl
 ```
 
 - Move kubectl to a folder that is in your path.
 
 ```bash
-$ sudo mv ./kubectl /usr/local/bin
+sudo mv ./kubectl /usr/local/bin
 ```
 
 - After you install kubectl , you can verify its version with the following command:
 
 ```bash
-$ kubectl version --short --client
+kubectl version --short --client
 ```
 
 ## Part 2 - Create the infrastructure with Terraform
