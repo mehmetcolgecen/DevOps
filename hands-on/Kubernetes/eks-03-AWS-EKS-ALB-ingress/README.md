@@ -254,7 +254,7 @@ ingress-clarusshop   <none>   *       k8s-default-ingressc-38a2e90a69-465630546.
 
 - For now, our application is working on http. Now, we add an host name and return the http to https.
 
-- Firstly, bind ingress address to an host nane in the route53 service.
+- Firstly, bind ingress address to an host name in the route53 service.
 
 - Then update the ingress.yaml as below. Don't forgot to change certificate-arn.
 
