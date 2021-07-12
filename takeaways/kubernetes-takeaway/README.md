@@ -13,3 +13,5 @@
 - [Kubernetes Takeaway-07 : Managing Kubernetes Cluster with AWS EKS](7.Managing-Kubernetes-Cluster-with-AWS-EKS.pdf)
 
 - [Kubernetes Takeaway-08 : StorageClasses and Ingress](8.Storage-Classes-and-Ingress-cohort-07-21.pdf)
+
+- [Kubernetes Takeaway-09 : AWS LoadBalancer Controller (ALB) and Ingress with EKS](9.AWS-LoadBalancer-Controller&Ingress-with-EKS-cohort-07-21.pdf)
