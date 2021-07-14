@@ -128,6 +128,10 @@ eksctl create cluster \
  --ssh-access \
  --ssh-public-key  ~/.ssh/id_rsa.pub \
  --managed
+
+or 
+
+eksctl create cluster --name mycluster --version 1.18 --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c --nodegroup-name my-nodes --node-type t2.medium --nodes 1 --nodes-min 1 --nodes-max 2 --ssh-access --ssh-public-key ~/.ssh/id_rsa.pub --managed
 ```
 
 - Note that the default value for node-type is m5.large.
