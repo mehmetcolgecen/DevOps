@@ -90,7 +90,7 @@ cd petclinic-microservices
 rm -rf .git
 ```
 
-* Create a new repository on your Github account with the name **petclinic-microservices**.
+* Create a new repository on your Github account with the name **petclinic-microservices-with-db**.
 
 *  Initiate the cloned repository to make it a git repository and push the local repository to your remote repository.
 
