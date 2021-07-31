@@ -77,7 +77,7 @@ yum install java-11-amazon-corretto -y
 
 ## MSP 2 - Prepare GitHub Repository for the Project
 
-* Connect to your Development Server via `ssh` and clone the petclinic app from the repository [Spring Petclinic Microservices App](https://github.com/clarusway/petclinic-microservices.git).
+* Connect to your Development Server via `ssh` and clone the petclinic app from the repository [Spring Petclinic Microservices App](https://github.com/clarusway/petclinic-microservices-with-db.git).
 
 ``` bash
 git clone https://github.com/clarusway/petclinic-microservices-with-db.git
