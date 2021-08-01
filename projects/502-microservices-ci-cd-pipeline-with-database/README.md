@@ -161,7 +161,7 @@ git branch feature/msp-4
 git checkout feature/msp-4
 ```
 
-* Prepare a script to package the application with maven wrapper and save it as `package-with-mvn-wrapper.sh` under `petclinic-microservices` folder.
+* Prepare a script to package the application with maven wrapper and save it as `package-with-mvn-wrapper.sh` under `petclinic-microservices-with-db` folder.
 
 ``` bash
 ./mvnw clean package
@@ -377,7 +377,7 @@ git branch feature/msp-7
 git checkout feature/msp-7
 ```
 
-* Prepare a script to build the docker images and save it as `build-dev-docker-images.sh` under `petclinic-microservices` folder.
+* Prepare a script to build the docker images and save it as `build-dev-docker-images.sh` under `petclinic-microservices-with-db` folder.
 
 ``` bash
 ./mvnw clean package
@@ -426,7 +426,7 @@ git branch feature/msp-8
 git checkout feature/msp-8
 ```
 
-* Prepare docker compose file to deploy the application locally and save it as `docker-compose-local.yml` under `petclinic-microservices` folder.
+* Prepare docker compose file to deploy the application locally and save it as `docker-compose-local.yml` under `petclinic-microservices-with-db` folder.
 
 ``` yaml
 version: '2'
@@ -549,7 +549,7 @@ services:
     - 3306:3306
 ```
 
-* Prepare a script to test the deployment of the app locally with `docker-compose-local.yml` and save it as `test-local-deployment.sh` under `petclinic-microservices` folder.
+* Prepare a script to test the deployment of the app locally with `docker-compose-local.yml` and save it as `test-local-deployment.sh` under `petclinic-microservices-with-db` folder.
 
 ``` bash
 docker-compose -f docker-compose-local.yml up
