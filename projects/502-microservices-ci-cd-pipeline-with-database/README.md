@@ -632,18 +632,18 @@ public class PetTest {
 }
 ```
 
+* Implement unit tests with maven wrapper for only `customer-service` microservice locally on `Dev Server`.
+
+``` bash
+../mvnw clean test
+```
+
 * Commit the change, then push the changes to the remote repo.
 
 ``` bash
 git add .
 git commit -m 'added 3 UTs for customer-service'
 git push --set-upstream origin feature/msp-9
-```
-
-* Implement unit tests with maven wrapper for only `customer-service` microservice locally on `Dev Server`.
-
-``` bash
-. ../mvnw clean test
 ```
 
 * Update POM file at root folder for Code Coverage Report using `Jacoco` tool plugin.
