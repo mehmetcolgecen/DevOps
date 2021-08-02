@@ -671,6 +671,12 @@ git push --set-upstream origin feature/msp-9
 </plugin>
 ```
 
+* Create code coverage report for only `customer-service` microservice locally on `Dev Server`.
+
+``` bash
+../mvnw test
+```
+
 * Commit the change, then push the changes to the remote repo.
 
 ``` bash
@@ -680,12 +686,6 @@ git push
 git checkout dev
 git merge feature/msp-9
 git push origin dev
-```
-
-* Create code coverage report for only `customer-service` microservice locally on `Dev Server`.
-
-``` bash
-. ../mvnw test
 ```
 
 * Deploy code coverage report (located under relative path `target/site/jacoco` of the microservice) on Simple HTTP Server for only `customer-service` microservice on `Dev Server`.
