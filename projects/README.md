@@ -16,4 +16,4 @@ List of projects within devops workshop as follows;
 
 - [Project-207 : Web Page Application (Postgresql-Nodejs-React) deployed on EC2's with Ansible, Docker and Nginx Proxy Server](./207-Ansible-publish-website-postgresql-nodejs-react)
 
-- [Project-502 : 502-microservices-ci-cd-pipeline-with-database](./Microservices CI/CD Pipeline)
+- [Project-502 : Microservices CI/CD Pipeline](./502-microservices-ci-cd-pipeline-with-database)
