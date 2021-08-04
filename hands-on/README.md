@@ -46,6 +46,11 @@ List of hands-on trainings within DevOps as follows;
 - [Hands-on Docker-09 : Docker Swarm Networking Operations](./Docker/docker-09-swarm-networking-managing-services-secrets-stacks/)
 >>>>>>> e4d47162a527adb7bbb6d4e17844506122c3a21d
 
+- [Hands-on Docker-10 : Difference between shell form and exec form, and ENTRYPOINT instruction and CMD instruction](./Docker/docker-10-difference-between-exec-form-shell-form-and-CMD-ENTRYPOINT-instructions)
+
+- [Hands-on Docker-13 : docker logs, top and stats command](./Docker/docker-13-docker-logs-top-and-stats-commands)
+
+
 # Maven
 
 - [Hands-on Maven-01 : Using Maven As a Build Tool](./Maven/maven-01-using-maven-as-a-build-tool/)
