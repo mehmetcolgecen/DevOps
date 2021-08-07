@@ -2748,7 +2748,6 @@ services:
     - 8081:8081
     labels:
       kompose.image-pull-secret: "regcred"
-      kompose.service.expose: "petclinic04.clarusway.us"
   visits-service:
     image: IMAGE_TAG_VISITS_SERVICE
     deploy:
@@ -2757,7 +2756,6 @@ services:
      - 8082:8082
     labels:
       kompose.image-pull-secret: "regcred"
-      kompose.service.expose: "petclinic04.clarusway.us"
   vets-service:
     image: IMAGE_TAG_VETS_SERVICE
     deploy:
@@ -2766,7 +2764,6 @@ services:
      - 8083:8083
     labels:
       kompose.image-pull-secret: "regcred"
-      kompose.service.expose: "petclinic04.clarusway.us"
   api-gateway:
     image: IMAGE_TAG_API_GATEWAY
     deploy:
