@@ -2806,6 +2806,14 @@ services:
     - 9091:9090
     labels:
       kompose.image-pull-secret: "regcred"
+
+  mysql-server:
+    image: mysql:5.7.8
+    environment: 
+      MYSQL_ROOT_PASSWORD: petclinic
+      MYSQL_DATABASE: petclinic
+      ports:
+      - 3306:3306
 ```
 
 * Install [conversion tool](https://kompose.io/installation/) named `Kompose` on your Jenkins Server. [User Guide](https://kompose.io/user-guide/#user-guide)
