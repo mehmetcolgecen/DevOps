@@ -632,7 +632,7 @@ public class PetTest {
 }
 ```
 
-* Implement unit tests with maven wrapper for only `customer-service` microservice locally on `Dev Server`.
+* Implement unit tests with maven wrapper for only `customer-service` microservice locally on `Dev Server`. Execute the following command under the `spring-petclinic-customers-service folder`.
 
 ``` bash
 ../mvnw clean test
@@ -671,7 +671,7 @@ git push --set-upstream origin feature/msp-9
 </plugin>
 ```
 
-* Create code coverage report for only `customer-service` microservice locally on `Dev Server`.
+* Create code coverage report for only `customer-service` microservice locally on `Dev Server`. Execute the following command under the `spring-petclinic-customers-service folder`.
 
 ``` bash
 ../mvnw test
