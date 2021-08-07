@@ -2812,8 +2812,8 @@ services:
     environment: 
       MYSQL_ROOT_PASSWORD: petclinic
       MYSQL_DATABASE: petclinic
-      ports:
-      - 3306:3306
+    ports:
+    - 3306:3306
 ```
 
 * Install [conversion tool](https://kompose.io/installation/) named `Kompose` on your Jenkins Server. [User Guide](https://kompose.io/user-guide/#user-guide)
