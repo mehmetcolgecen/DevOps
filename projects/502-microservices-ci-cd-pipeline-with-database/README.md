@@ -1609,7 +1609,7 @@ git push --set-upstream origin feature/msp-17
       * Click `Save`
       * Click `Build now` to manually start the job.
 
-- Prepare a docker compose file for swarm deployment and save it as `docker-compose-swarm-dev.yml`.
+- Prepare a docker compose file for swarm deployment and save it as `docker-compose-swarm-dev.yml` under the project root.
 
 ```yaml
 version: '3.8'
@@ -1620,7 +1620,7 @@ services:
     networks:
       - clarusnet
     ports:
-     - 8888:8888
+      - 8888:8888
 
   discovery-server:
     image: "${IMAGE_TAG_DISCOVERY_SERVER}"
@@ -1630,7 +1630,7 @@ services:
     networks:
       - clarusnet
     ports:
-     - 8761:8761
+      - 8761:8761
 
   customers-service:
     image: "${IMAGE_TAG_CUSTOMERS_SERVICE}"
@@ -1641,13 +1641,13 @@ services:
           delay: 5s
           order: start-first
     depends_on:
-     - config-server
-     - discovery-server
+      - config-server
+      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     networks:
       - clarusnet
     ports:
-    - 8081:8081
+      - 8081:8081
 
   visits-service:
     image: "${IMAGE_TAG_VISITS_SERVICE}"
@@ -1658,13 +1658,13 @@ services:
           delay: 5s
           order: start-first
     depends_on:
-     - config-server
-     - discovery-server
+      - config-server
+      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     networks:
       - clarusnet
     ports:
-     - 8082:8082
+      - 8082:8082
 
   vets-service:
     image: "${IMAGE_TAG_VETS_SERVICE}"
@@ -1675,13 +1675,13 @@ services:
           delay: 5s
           order: start-first
     depends_on:
-     - config-server
-     - discovery-server
+      - config-server
+      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     networks:
       - clarusnet
     ports:
-     - 8083:8083
+      - 8083:8083
 
   api-gateway:
     image: "${IMAGE_TAG_API_GATEWAY}"
@@ -1692,44 +1692,44 @@ services:
           delay: 5s
           order: start-first
     depends_on:
-     - config-server
-     - discovery-server
+      - config-server
+      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     networks:
       - clarusnet
     ports:
-     - 8080:8080
+      - 8080:8080
 
   tracing-server:
     image: openzipkin/zipkin
     environment:
-    - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
+      - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
     networks:
       - clarusnet
     ports:
-     - 9411:9411
+      - 9411:9411
 
   admin-server:
     image: "${IMAGE_TAG_ADMIN_SERVER}"
     depends_on:
-     - config-server
-     - discovery-server
+      - config-server
+      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     networks:
       - clarusnet
     ports:
-     - 9090:9090
+      - 9090:9090
 
   hystrix-dashboard:
     image: "${IMAGE_TAG_HYSTRIX_DASHBOARD}"
     depends_on:
-     - config-server
-     - discovery-server
+      - config-server
+      - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     networks:
       - clarusnet
     ports:
-     - 7979:7979
+      - 7979:7979
 
   ## Grafana / Prometheus
 
@@ -1738,14 +1738,24 @@ services:
     networks:
       - clarusnet
     ports:
-    - 3000:3000
+      - 3000:3000
 
   prometheus-server:
     image: "${IMAGE_TAG_PROMETHEUS_SERVICE}"
     networks:
       - clarusnet
     ports:
-    - 9091:9090
+      - 9091:9090
+    
+  mysql-server:
+    image: mysql:5.7.8
+    environment: 
+      MYSQL_ROOT_PASSWORD: petclinic
+      MYSQL_DATABASE: petclinic
+    networks:
+      - clarusnet
+    ports:
+      - 3306:3306
 
 networks:
   clarusnet:
