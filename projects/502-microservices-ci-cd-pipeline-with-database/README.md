@@ -2860,61 +2860,6 @@ kompose convert -f k8s/docker-compose.yml -o k8s/base
         command: ['sh', '-c', 'until nc -z discovery-server:8761; do echo waiting for discovery-server; sleep 2; done;']
 ``` 
 
-* Update `customers-service-ingress.yaml` file with following setup to pass the api requests to `customers service` microservice.
-
-```yaml
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/gateway(/|$)(.*)
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/customer(/|$)(.*)
-```
-
-* Update `visits-service-ingress.yaml` file with following setup to pass the api requests to `visits service` microservice.
-
-```yaml
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: visits-service
-          servicePort: 8082
-        path: /api/visit(/|$)(.*)
-```
-
-* Update `vets-service-ingress.yaml` file with following setup to pass the api requests to `vets service` microservice.
-
-```yaml
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: vets-service
-          servicePort: 8083
-        path: /api/vet(/|$)(.*)
-```
-
 * Create `kustomization-template.yml` file with following content and save under `k8s/base` folder.
 
 ```yaml
@@ -2942,9 +2887,6 @@ resources:
 - vets-service-service.yaml
 - visits-service-service.yaml
 - api-gateway-ingress.yaml
-- customers-service-ingress.yaml
-- vets-service-ingress.yaml
-- visits-service-ingress.yaml
 
 images:
 - name: IMAGE_TAG_CONFIG_SERVER
@@ -2988,69 +2930,6 @@ metadata:
   name: api-gateway
 spec:
   replicas: 3
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: api-gateway
-spec:
-  rules:
-    - host: petclinic.clarusway.us
-      http:
-        paths:
-          - backend:
-              serviceName: api-gateway
-              servicePort: 8080
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: customers-service
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/gateway(/|$)(.*)
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/customer(/|$)(.*)
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: vets-service
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: vets-service
-          servicePort: 8083
-        path: /api/vet(/|$)(.*)
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: visits-service
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: visits-service
-          servicePort: 8082
-        path: /api/visit(/|$)(.*)
 ```
 
 * Create `kustomization.yml` and `replica-count.yml` files for production envrionment and save them under `k8s/prod` folder.
