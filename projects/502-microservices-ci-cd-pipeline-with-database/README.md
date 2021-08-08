@@ -1773,6 +1773,9 @@ networks:
       src: "{{ workspace }}/docker-compose-swarm-dev-tagged.yml"
       dest: /home/ec2-user/docker-compose-swarm-dev-tagged.yml
 
+  - name: labeled the nod
+    shell: "docker node update --label-add type=db worker2"
+
   - name: get login credentials for ecr
     shell: "export PATH=$PATH:/usr/local/bin/ && aws ecr get-login-password --region {{ aws_region }} | docker login --username AWS --password-stdin {{ ecr_registry }}"
 
@@ -2497,6 +2500,16 @@ services:
       - clarusnet
     ports:
     - 9091:9090
+  
+  mysql-server:
+    image: mysql:5.7.8
+    environment: 
+      MYSQL_ROOT_PASSWORD: petclinic
+      MYSQL_DATABASE: petclinic
+    networks:
+      - clarusnet
+    ports:
+      - 3306:3306
 
 networks:
   clarusnet:
@@ -2514,9 +2527,11 @@ networks:
       src: "{{ workspace }}/docker-compose-swarm-qa-tagged.yml"
       dest: /home/ec2-user/docker-compose-swarm-qa-tagged.yml
 
+  - name: labeled the nod
+    shell: "docker node update --label-add type=db worker2"
+
   - name: get login credentials for ecr
     shell: "export PATH=$PATH:/usr/local/bin/ && aws ecr get-login-password --region {{ aws_region }} | docker login --username AWS --password-stdin {{ ecr_registry }}"
-    register: output
 
   - name: deploy the app stack on swarm
     shell: "docker stack deploy --with-registry-auth -c /home/ec2-user/docker-compose-swarm-qa-tagged.yml {{ app_name }}"
