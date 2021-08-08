@@ -2869,6 +2869,7 @@ resources:
 - discovery-server-deployment.yaml
 - grafana-server-deployment.yaml
 - hystrix-dashboard-deployment.yaml
+- mysql-server-deployment.yaml
 - prometheus-server-deployment.yaml
 - tracing-server-deployment.yaml
 - vets-service-deployment.yaml
@@ -2880,6 +2881,7 @@ resources:
 - discovery-server-service.yaml
 - grafana-server-service.yaml
 - hystrix-dashboard-service.yaml
+- mysql-server-service.yaml
 - prometheus-server-service.yaml
 - tracing-server-service.yaml
 - vets-service-service.yaml
