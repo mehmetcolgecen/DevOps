@@ -2527,11 +2527,9 @@ networks:
       src: "{{ workspace }}/docker-compose-swarm-qa-tagged.yml"
       dest: /home/ec2-user/docker-compose-swarm-qa-tagged.yml
 
-  - name: labeled the nod
-    shell: "docker node update --label-add type=db worker2"
-
   - name: get login credentials for ecr
     shell: "export PATH=$PATH:/usr/local/bin/ && aws ecr get-login-password --region {{ aws_region }} | docker login --username AWS --password-stdin {{ ecr_registry }}"
+    register: output
 
   - name: deploy the app stack on swarm
     shell: "docker stack deploy --with-registry-auth -c /home/ec2-user/docker-compose-swarm-qa-tagged.yml {{ app_name }}"
