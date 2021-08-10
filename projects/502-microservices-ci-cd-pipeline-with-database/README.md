@@ -2926,7 +2926,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 3
+  replicas: 2
 ```
 
 * Create `kustomization.yml` and `replica-count.yml` files for production envrionment and save them under `k8s/prod` folder.
@@ -2947,7 +2947,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 5
+  replicas: 3
 ```
 
 * Install `kubectl` on Jenkins Server. [Install and Set up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
