@@ -1773,9 +1773,6 @@ networks:
       src: "{{ workspace }}/docker-compose-swarm-dev-tagged.yml"
       dest: /home/ec2-user/docker-compose-swarm-dev-tagged.yml
 
-  - name: labeled the nod
-    shell: "docker node update --label-add type=db worker2"
-
   - name: get login credentials for ecr
     shell: "export PATH=$PATH:/usr/local/bin/ && aws ecr get-login-password --region {{ aws_region }} | docker login --username AWS --password-stdin {{ ecr_registry }}"
 
@@ -1880,8 +1877,8 @@ pipeline {
     environment {
         PATH=sh(script:"echo $PATH:/usr/local/bin", returnStdout:true).trim()
         APP_NAME="petclinic"
-        APP_STACK_NAME="Call-${APP_NAME}-app-${BUILD_NUMBER}"
-        APP_REPO_NAME="clarusway-repo/${APP_NAME}-app-dev"
+        APP_STACK_NAME="Callet-${APP_NAME}-app-${BUILD_NUMBER}"
+        APP_REPO_NAME="claruswayset-repo/${APP_NAME}-app-dev"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
