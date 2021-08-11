@@ -2782,7 +2782,7 @@ services:
      - 8080:8080
     labels:
       kompose.image-pull-secret: "regcred"
-      kompose.service.expose: "petclinic04.clarusway.us"
+      kompose.service.expose: "petclinic07.clarusway.us"
       kompose.service.type: "nodeport"
   tracing-server:
     image: openzipkin/zipkin
