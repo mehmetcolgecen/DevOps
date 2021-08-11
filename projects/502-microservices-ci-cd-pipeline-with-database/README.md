@@ -3602,6 +3602,36 @@ docker push "${IMAGE_TAG_GRAFANA_SERVICE}"
 docker push "${IMAGE_TAG_PROMETHEUS_SERVICE}"
 ```
 
+- At this stage, we will use Amazon RDS instead of mysql pod and service. Create a mysql database on AWS RDS.
+
+  - Engine options: MySQL
+  - Version : 5.7.30
+  - Templates: Free tier
+  - DB instance identifier: petclinic
+  - Master username: root
+  - Master password: petclinic
+  - Public access: Yes
+  - Initial database name: petclinic
+
+- Delete mysql-server-deployment.yaml line from k8s/base/kustomization-template.yml file.
+
+- Update k8s/base/mysql-server-service.yaml as below.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-local-db.yml
+    kompose.version: 1.22.0 (955b78124)
+  labels:
+    io.kompose.service: mysql-server
+  name: mysql-server
+spec:
+  type: ExternalName
+  externalName: petclinic.cbanmzptkrzf.us-east-1.rds.amazonaws.com # Change this line with the endpoint of your RDS.
+```
+
 * Create a `Production Pipeline` on Jenkins with name of `petclinic-prod` with following script and configure a `github-webhook` to trigger the pipeline every `commit` on `master` branch. `Petclinic production pipeline` should be deployed on permanent prod-environment on `petclinic-cluster` Kubernetes cluster under `petclinic-prod-ns` namespace.
 
 * Prepare a Jenkinsfile for `petclinic-prod` pipeline and save it as `jenkinsfile-petclinic-prod` under `jenkins` folder.
