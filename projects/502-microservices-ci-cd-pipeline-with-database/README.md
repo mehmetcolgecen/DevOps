@@ -2777,7 +2777,7 @@ services:
   api-gateway:
     image: IMAGE_TAG_API_GATEWAY
     deploy:
-      replicas: 2
+      replicas: 1
     ports:
      - 8080:8080
     labels:
