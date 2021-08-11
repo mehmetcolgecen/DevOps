@@ -2927,7 +2927,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 2
+  replicas: 1
 ```
 
 * Create `kustomization.yml` and `replica-count.yml` files for production envrionment and save them under `k8s/prod` folder.
