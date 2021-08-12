@@ -3134,7 +3134,7 @@ aws ec2 create-key-pair --region us-east-1 --key-name call-rancher.key --query K
 chmod 400 ~/.ssh/call-rancher.key
 ```
 
-* Launch an EC2 instance using `Ubuntu Server 20.04 LTS (HVM) ami-0885b1f6bd170450c  (64-bit x86)` with `t2.medium` type, 16 GB root volume,  `call-rke-cluster-sg` security group, `call-rke-role` IAM Role, `Name:Call-Rancher-Cluster-Instance` tag and `call-rancher.key` key-pair. Take note of `subnet id` of EC2. 
+* Launch an EC2 instance using `Ubuntu Server 20.04 LTS (HVM) (64-bit x86)` with `t2.medium` type, 16 GB root volume,  `call-rke-cluster-sg` security group, `call-rke-role` IAM Role, `Name:Call-Rancher-Cluster-Instance` tag and `call-rancher.key` key-pair. Take note of `subnet id` of EC2. 
 
 * Attach a tag to the `nodes (intances)`, `subnets` and `security group` for Rancher with `Key = kubernetes.io/cluster/Call-Rancher` and `Value = owned`.
   
