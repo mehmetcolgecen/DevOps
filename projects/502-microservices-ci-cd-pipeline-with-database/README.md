@@ -3117,8 +3117,6 @@ git checkout feature/msp-23
   
     * Allow SSH on port 22 to any node IP that installs Docker (ex. Jenkins Server).
 
-    * Allow all protocol on all port from `call-rke-cluster-sg` for self communication between Rancher `controlplane`, `etcd`, `worker` nodes.****
-
   * Outbound rules;
 
     * Allow SSH on port 22 to any node IP from a node created using Node Driver.
@@ -3127,6 +3125,7 @@ git checkout feature/msp-23
 
     * Allow TCP on port 2376 to any node IP from a node created using Node Driver for Docker machine TLS port.
 
+  * Allow all protocol on all port from `call-rke-cluster-sg` for self communication between Rancher `controlplane`, `etcd`, `worker` nodes.
 
 * Log into Jenkins Server and create `call-rancher.key` key-pair for Rancher Server using AWS CLI
   
