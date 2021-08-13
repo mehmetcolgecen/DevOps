@@ -3167,10 +3167,12 @@ echo \
 sudo apt-get update
 # List the versions available in your repo
 apt-cache madison docker-ce
-#Install a specific version using the version string from the second column
+
+# Since Rancher is not compatible (yet) with latest version of Docker install version 19.03.15 or earlier version using the version string (exp: 5:19.03.15~3-0~ubuntu-focal) from the second column
 sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io
 sudo systemctl start docker
 sudo systemctl enable docker
+
 # Add ubuntu user to docker group
 sudo usermod -aG docker ubuntu
 newgrp docker
