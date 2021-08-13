@@ -3430,9 +3430,15 @@ chmod +x /usr/local/bin/rancher
 rancher --version
 ```
   
-* Create Rancher API Key [Rancher API Key](https://rancher.com/docs/rancher/v2.x/en/user-settings/api-keys/#creating-an-api-key) to enable access to the `Rancher` server. 
+* Create Rancher API Key [Rancher API Key](https://rancher.com/docs/rancher/v2.x/en/user-settings/api-keys/#creating-an-api-key) to enable access to the `Rancher` server. Take note, `Access Key (username)` and `Secret Key (password)`.
 
 * Create a credentials with kind of `Username with password` on Jenkins Server using the `Rancher API Key`.
+
+  * On jenkins server, select Manage Jenkins --> Manage Credentials --> Jenkins --> 	Global credentials (unrestricted) --> Add Credentials.
+
+  * Paste `Access Key (username)` to Username field and `Secret Key (password)` to Password field.
+
+  * Define an id like `rancher-petclinic-credentials`.
 
 * Create a Staging Pipeline on Jenkins with name of `petclinic-staging` with following script and configure a `cron job` to trigger the pipeline every Sundays at midnight (`59 23 * * 0`) on `release` branch. `Petclinic staging pipeline` should be deployed on permanent staging-environment on `petclinic-cluster` Kubernetes cluster under `petclinic-staging-ns` namespace.
 
@@ -3449,7 +3455,7 @@ pipeline {
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         RANCHER_URL="https://rancher.clarusway.us"
-        // Get the project-id from Rancher UI
+        // Get the project-id from Rancher UI (petclinic-cluster-staging namespace, View in API, copy projectId )
         RANCHER_CONTEXT="petclinic-cluster:project-id" 
         RANCHER_CREDS=credentials('rancher-petclinic-credentials')
     }
