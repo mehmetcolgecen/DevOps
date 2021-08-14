@@ -54,7 +54,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-0947d2ba12ee1ff75
-      InstanceType: t2.medium
+      InstanceType: t3a.medium
       KeyName: !Ref KeyPairName
       IamInstanceProfile: !Ref JenkinsServerEC2Profile
       SecurityGroupIds:
