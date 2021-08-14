@@ -243,15 +243,6 @@ MSP-22:
     |--> used before launching the containers in a pod
     |--> command: ['sh', '-c', 'until nc -z discovery-server:8761; do echo waiting for discovery-server; sleep 2; done;']
         |--> command for busybox. waits until the port of a service is reachable
-        
-* ingress definition files :
-    |--> nginx.ingress.kubernetes.io/rewrite-target: /$2
-        |--> this is an ingress annotation for rewriting request url
-        |--> $2 catches the second regular expression "(.*)"
-    |--> path: /api/vet(/|$)(.*)
-        |--> any request with /api/vet/ or /api/vet is directed to the related service
-        |--> but only the part that comes after "/api/vet/" will be captured and the request url will be rewriten 
-             with this part
 
 * kustomize tool : 
     |--> it s used for customizing the definition files. You can add a field or change a field on the k8s definition files 

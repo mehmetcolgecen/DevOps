@@ -2777,12 +2777,13 @@ services:
   api-gateway:
     image: IMAGE_TAG_API_GATEWAY
     deploy:
-      replicas: 2
+      replicas: 1
     ports:
      - 8080:8080
     labels:
       kompose.image-pull-secret: "regcred"
-      kompose.service.expose: "petclinic04.clarusway.us"
+      kompose.service.expose: "petclinic07.clarusway.us"
+      kompose.service.type: "nodeport"
   tracing-server:
     image: openzipkin/zipkin
     environment:
@@ -2855,61 +2856,6 @@ kompose convert -f k8s/docker-compose.yml -o k8s/base
         command: ['sh', '-c', 'until nc -z discovery-server:8761; do echo waiting for discovery-server; sleep 2; done;']
 ``` 
 
-* Update `customers-service-ingress.yaml` file with following setup to pass the api requests to `customers service` microservice.
-
-```yaml
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/gateway(/|$)(.*)
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/customer(/|$)(.*)
-```
-
-* Update `visits-service-ingress.yaml` file with following setup to pass the api requests to `visits service` microservice.
-
-```yaml
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: visits-service
-          servicePort: 8082
-        path: /api/visit(/|$)(.*)
-```
-
-* Update `vets-service-ingress.yaml` file with following setup to pass the api requests to `vets service` microservice.
-
-```yaml
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: vets-service
-          servicePort: 8083
-        path: /api/vet(/|$)(.*)
-```
-
 * Create `kustomization-template.yml` file with following content and save under `k8s/base` folder.
 
 ```yaml
@@ -2921,6 +2867,7 @@ resources:
 - discovery-server-deployment.yaml
 - grafana-server-deployment.yaml
 - hystrix-dashboard-deployment.yaml
+- mysql-server-deployment.yaml
 - prometheus-server-deployment.yaml
 - tracing-server-deployment.yaml
 - vets-service-deployment.yaml
@@ -2932,14 +2879,12 @@ resources:
 - discovery-server-service.yaml
 - grafana-server-service.yaml
 - hystrix-dashboard-service.yaml
+- mysql-server-service.yaml
 - prometheus-server-service.yaml
 - tracing-server-service.yaml
 - vets-service-service.yaml
 - visits-service-service.yaml
 - api-gateway-ingress.yaml
-- customers-service-ingress.yaml
-- vets-service-ingress.yaml
-- visits-service-ingress.yaml
 
 images:
 - name: IMAGE_TAG_CONFIG_SERVER
@@ -2982,70 +2927,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 3
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: api-gateway
-spec:
-  rules:
-    - host: petclinic.clarusway.us
-      http:
-        paths:
-          - backend:
-              serviceName: api-gateway
-              servicePort: 8080
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: customers-service
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/gateway(/|$)(.*)
-      - backend:
-          serviceName: customers-service
-          servicePort: 8081
-        path: /api/customer(/|$)(.*)
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: vets-service
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: vets-service
-          servicePort: 8083
-        path: /api/vet(/|$)(.*)
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: visits-service
-spec:
-  rules:
-  - host: petclinic.clarusway.us
-    http:
-      paths:
-      - backend:
-          serviceName: visits-service
-          servicePort: 8082
-        path: /api/visit(/|$)(.*)
+  replicas: 1
 ```
 
 * Create `kustomization.yml` and `replica-count.yml` files for production envrionment and save them under `k8s/prod` folder.
@@ -3066,7 +2948,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 5
+  replicas: 3
 ```
 
 * Install `kubectl` on Jenkins Server. [Install and Set up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
@@ -3237,8 +3119,10 @@ git checkout feature/msp-23
 
   * Outbound rules;
 
-    * Allow SSH on port 22 to any node IP from a node created using Node Driver.
+    * Allow SSH protocol (TCP on port 22) to any node IP from a node created using Node Driver.
 
+    * Allow HTTP protocol (TCP on port 80) to all IP for getting updates.
+    
     * Allow HTTPS protocol (TCP on port 443) to `35.160.43.145/32`, `35.167.242.46/32`, `52.33.59.17/32` for catalogs of `git.rancher.io`.
 
     * Allow TCP on port 2376 to any node IP from a node created using Node Driver for Docker machine TLS port.
@@ -3252,7 +3136,7 @@ aws ec2 create-key-pair --region us-east-1 --key-name call-rancher.key --query K
 chmod 400 ~/.ssh/call-rancher.key
 ```
 
-* Launch an EC2 instance using `Ubuntu Server 20.04 LTS (HVM) ami-0885b1f6bd170450c  (64-bit x86)` with `t2.medium` type, 16 GB root volume,  `call-rke-cluster-sg` security group, `call-rke-role` IAM Role, `Name:Call-Rancher-Cluster-Instance` tag and `call-rancher.key` key-pair. Take note of `subnet id` of EC2. 
+* Launch an EC2 instance using `Ubuntu Server 20.04 LTS (HVM) (64-bit x86)` with `t2.medium` type, 16 GB root volume,  `call-rke-cluster-sg` security group, `call-rke-role` IAM Role, `Name:Call-Rancher-Cluster-Instance` tag and `call-rancher.key` key-pair. Take note of `subnet id` of EC2. 
 
 * Attach a tag to the `nodes (intances)`, `subnets` and `security group` for Rancher with `Key = kubernetes.io/cluster/Call-Rancher` and `Value = owned`.
   
@@ -3265,10 +3149,30 @@ sudo hostnamectl set-hostname rancher-instance-1
 # Update OS 
 sudo apt-get update -y
 sudo apt-get upgrade -y
-# Install and start Docker on Ubuntu 20.04
-sudo apt install docker.io -y  
+# Install and start Docker on Ubuntu 19.03
+# Update the apt package index and install packages to allow apt to use a repository over HTTPS
+sudo apt-get install \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release
+# Add Docker’s official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+# Use the following command to set up the stable repository
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# Update packages
+sudo apt-get update
+# List the versions available in your repo
+apt-cache madison docker-ce
+
+# Since Rancher is not compatible (yet) with latest version of Docker install version 19.03.15 or earlier version using the version string (exp: 5:19.03.15~3-0~ubuntu-focal) from the second column
+sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io
 sudo systemctl start docker
 sudo systemctl enable docker
+
 # Add ubuntu user to docker group
 sudo usermod -aG docker ubuntu
 newgrp docker
@@ -3526,9 +3430,15 @@ chmod +x /usr/local/bin/rancher
 rancher --version
 ```
   
-* Create Rancher API Key [Rancher API Key](https://rancher.com/docs/rancher/v2.x/en/user-settings/api-keys/#creating-an-api-key) to enable access to the `Rancher` server. 
+* Create Rancher API Key [Rancher API Key](https://rancher.com/docs/rancher/v2.x/en/user-settings/api-keys/#creating-an-api-key) to enable access to the `Rancher` server. Take note, `Access Key (username)` and `Secret Key (password)`.
 
 * Create a credentials with kind of `Username with password` on Jenkins Server using the `Rancher API Key`.
+
+  * On jenkins server, select Manage Jenkins --> Manage Credentials --> Jenkins --> 	Global credentials (unrestricted) --> Add Credentials.
+
+  * Paste `Access Key (username)` to Username field and `Secret Key (password)` to Password field.
+
+  * Define an id like `rancher-petclinic-credentials`.
 
 * Create a Staging Pipeline on Jenkins with name of `petclinic-staging` with following script and configure a `cron job` to trigger the pipeline every Sundays at midnight (`59 23 * * 0`) on `release` branch. `Petclinic staging pipeline` should be deployed on permanent staging-environment on `petclinic-cluster` Kubernetes cluster under `petclinic-staging-ns` namespace.
 
@@ -3545,7 +3455,7 @@ pipeline {
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         RANCHER_URL="https://rancher.clarusway.us"
-        // Get the project-id from Rancher UI
+        // Get the project-id from Rancher UI (petclinic-cluster-staging namespace, View in API, copy projectId )
         RANCHER_CONTEXT="petclinic-cluster:project-id" 
         RANCHER_CREDS=credentials('rancher-petclinic-credentials')
     }
@@ -3617,6 +3527,8 @@ pipeline {
     }
 }
 ```
+
+* Create an `A` record of `staging-petclinic.clarusway.us` in your hosted zone (in our case `clarusway.us`) using AWS Route 53 domain registrar and bind it to your `petclinic cluster`.
 
 * Commit the change, then push the script to the remote repo.
 
@@ -3718,6 +3630,36 @@ docker push "${IMAGE_TAG_VETS_SERVICE}"
 docker push "${IMAGE_TAG_VISITS_SERVICE}"
 docker push "${IMAGE_TAG_GRAFANA_SERVICE}"
 docker push "${IMAGE_TAG_PROMETHEUS_SERVICE}"
+```
+
+- At this stage, we will use Amazon RDS instead of mysql pod and service. Create a mysql database on AWS RDS.
+
+  - Engine options: MySQL
+  - Version : 5.7.30
+  - Templates: Free tier
+  - DB instance identifier: petclinic
+  - Master username: root
+  - Master password: petclinic
+  - Public access: Yes
+  - Initial database name: petclinic
+
+- Delete mysql-server-deployment.yaml line from k8s/base/kustomization-template.yml file.
+
+- Update k8s/base/mysql-server-service.yaml as below.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-local-db.yml
+    kompose.version: 1.22.0 (955b78124)
+  labels:
+    io.kompose.service: mysql-server
+  name: mysql-server
+spec:
+  type: ExternalName
+  externalName: petclinic.cbanmzptkrzf.us-east-1.rds.amazonaws.com # Change this line with the endpoint of your RDS.
 ```
 
 * Create a `Production Pipeline` on Jenkins with name of `petclinic-prod` with following script and configure a `github-webhook` to trigger the pipeline every `commit` on `master` branch. `Petclinic production pipeline` should be deployed on permanent prod-environment on `petclinic-cluster` Kubernetes cluster under `petclinic-prod-ns` namespace.
