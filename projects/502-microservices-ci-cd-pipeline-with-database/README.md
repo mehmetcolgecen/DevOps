@@ -3528,6 +3528,8 @@ pipeline {
 }
 ```
 
+* Create an `A` record of `staging-petclinic.clarusway.us` in your hosted zone (in our case `clarusway.us`) using AWS Route 53 domain registrar and bind it to your `petclinic cluster`.
+
 * Commit the change, then push the script to the remote repo.
 
 ``` bash
